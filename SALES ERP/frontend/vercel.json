@@ -1,7 +1,0 @@
-{
-  "rewrites": [
-    {
-      "destination": "http://103.134.239.26:2025/api/$1"
-    }
-  ]
-}

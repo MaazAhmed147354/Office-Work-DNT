@@ -1,0 +1,335 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|c:\\users\\administrator\\downloads\\erp\\backend-dotnet\\backend-dotnet\\controllers\\salescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|solutionrelative:backend-dotnet\\controllers\\salescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|c:\\users\\administrator\\downloads\\erp\\backend-dotnet\\backend-dotnet\\repositories\\isalesrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|solutionrelative:backend-dotnet\\repositories\\isalesrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|c:\\users\\administrator\\downloads\\erp\\backend-dotnet\\backend-dotnet\\repositories\\salesrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|solutionrelative:backend-dotnet\\repositories\\salesrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|c:\\users\\administrator\\downloads\\erp\\backend-dotnet\\backend-dotnet\\services\\salesservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|solutionrelative:backend-dotnet\\services\\salesservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|c:\\users\\administrator\\downloads\\erp\\backend-dotnet\\backend-dotnet\\services\\isalesservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|solutionrelative:backend-dotnet\\services\\isalesservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|c:\\users\\administrator\\downloads\\erp\\backend-dotnet\\backend-dotnet\\dtos\\salesanalysisdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|solutionrelative:backend-dotnet\\dtos\\salesanalysisdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|c:\\users\\administrator\\downloads\\erp\\backend-dotnet\\backend-dotnet\\controllers\\pagescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|solutionrelative:backend-dotnet\\controllers\\pagescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|c:\\users\\administrator\\downloads\\erp\\backend-dotnet\\backend-dotnet\\dtos\\salessummaryresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|solutionrelative:backend-dotnet\\dtos\\salessummaryresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|c:\\users\\administrator\\downloads\\erp\\backend-dotnet\\backend-dotnet\\dtos\\salesbysalespersonresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|solutionrelative:backend-dotnet\\dtos\\salesbysalespersonresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|c:\\users\\administrator\\downloads\\erp\\backend-dotnet\\backend-dotnet\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|solutionrelative:backend-dotnet\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|c:\\users\\administrator\\downloads\\erp\\backend-dotnet\\backend-dotnet\\repositories\\productrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|solutionrelative:backend-dotnet\\repositories\\productrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|c:\\users\\administrator\\downloads\\erp\\backend-dotnet\\backend-dotnet\\repositories\\orderdatarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|solutionrelative:backend-dotnet\\repositories\\orderdatarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|c:\\users\\administrator\\downloads\\erp\\backend-dotnet\\backend-dotnet\\repositories\\iproductwarrantyrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|solutionrelative:backend-dotnet\\repositories\\iproductwarrantyrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|c:\\users\\administrator\\downloads\\erp\\backend-dotnet\\backend-dotnet\\repositories\\iproductrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|solutionrelative:backend-dotnet\\repositories\\iproductrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|c:\\users\\administrator\\downloads\\erp\\backend-dotnet\\backend-dotnet\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|solutionrelative:backend-dotnet\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|c:\\users\\administrator\\downloads\\erp\\backend-dotnet\\backend-dotnet\\repositories\\customerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|solutionrelative:backend-dotnet\\repositories\\customerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|c:\\users\\administrator\\downloads\\erp\\backend-dotnet\\backend-dotnet\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|solutionrelative:backend-dotnet\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|c:\\users\\administrator\\downloads\\erp\\backend-dotnet\\backend-dotnet\\services\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|solutionrelative:backend-dotnet\\services\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|c:\\users\\administrator\\downloads\\erp\\backend-dotnet\\backend-dotnet\\repositories\\icustomerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F02D7E3-7D8F-479A-9E5D-80DBA022CDEB}|backend-dotnet\\backend-dotnet.csproj|solutionrelative:backend-dotnet\\repositories\\icustomerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 18,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ISalesRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Repositories\\ISalesRepository.cs",
+              "RelativeDocumentMoniker": "backend-dotnet\\Repositories\\ISalesRepository.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Repositories\\ISalesRepository.cs",
+              "RelativeToolTip": "backend-dotnet\\Repositories\\ISalesRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-02T09:23:26.055Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "SalesService.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Services\\SalesService.cs",
+              "RelativeDocumentMoniker": "backend-dotnet\\Services\\SalesService.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Services\\SalesService.cs",
+              "RelativeToolTip": "backend-dotnet\\Services\\SalesService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-02T09:22:26.07Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ISalesService.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Services\\ISalesService.cs",
+              "RelativeDocumentMoniker": "backend-dotnet\\Services\\ISalesService.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Services\\ISalesService.cs",
+              "RelativeToolTip": "backend-dotnet\\Services\\ISalesService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBEAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-02T09:21:45.433Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "SalesAnalysisDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\DTOs\\SalesAnalysisDTO.cs",
+              "RelativeDocumentMoniker": "backend-dotnet\\DTOs\\SalesAnalysisDTO.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\DTOs\\SalesAnalysisDTO.cs",
+              "RelativeToolTip": "backend-dotnet\\DTOs\\SalesAnalysisDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-02T09:18:06.305Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "PagesController.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Controllers\\PagesController.cs",
+              "RelativeDocumentMoniker": "backend-dotnet\\Controllers\\PagesController.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Controllers\\PagesController.cs",
+              "RelativeToolTip": "backend-dotnet\\Controllers\\PagesController.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAWwDYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-28T07:56:21.678Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "SalesSummaryResponseDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\DTOs\\SalesSummaryResponseDTO.cs",
+              "RelativeDocumentMoniker": "backend-dotnet\\DTOs\\SalesSummaryResponseDTO.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\DTOs\\SalesSummaryResponseDTO.cs",
+              "RelativeToolTip": "backend-dotnet\\DTOs\\SalesSummaryResponseDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-23T10:43:06.384Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "SalesBySalespersonResponseDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\DTOs\\SalesBySalespersonResponseDTO.cs",
+              "RelativeDocumentMoniker": "backend-dotnet\\DTOs\\SalesBySalespersonResponseDTO.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\DTOs\\SalesBySalespersonResponseDTO.cs",
+              "RelativeToolTip": "backend-dotnet\\DTOs\\SalesBySalespersonResponseDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAoAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-22T11:59:59.192Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ProductRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Repositories\\ProductRepository.cs",
+              "RelativeDocumentMoniker": "backend-dotnet\\Repositories\\ProductRepository.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Repositories\\ProductRepository.cs",
+              "RelativeToolTip": "backend-dotnet\\Repositories\\ProductRepository.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAAAowAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-21T08:41:48.711Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "OrderDataRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Repositories\\OrderDataRepository.cs",
+              "RelativeDocumentMoniker": "backend-dotnet\\Repositories\\OrderDataRepository.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Repositories\\OrderDataRepository.cs",
+              "RelativeToolTip": "backend-dotnet\\Repositories\\OrderDataRepository.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAQwBkAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-21T08:41:36.612Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "IProductWarrantyRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Repositories\\IProductWarrantyRepository.cs",
+              "RelativeDocumentMoniker": "backend-dotnet\\Repositories\\IProductWarrantyRepository.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Repositories\\IProductWarrantyRepository.cs",
+              "RelativeToolTip": "backend-dotnet\\Repositories\\IProductWarrantyRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-21T08:41:34.353Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "IProductRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Repositories\\IProductRepository.cs",
+              "RelativeDocumentMoniker": "backend-dotnet\\Repositories\\IProductRepository.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Repositories\\IProductRepository.cs",
+              "RelativeToolTip": "backend-dotnet\\Repositories\\IProductRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-21T08:41:33.322Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "CustomerRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Repositories\\CustomerRepository.cs",
+              "RelativeDocumentMoniker": "backend-dotnet\\Repositories\\CustomerRepository.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Repositories\\CustomerRepository.cs",
+              "RelativeToolTip": "backend-dotnet\\Repositories\\CustomerRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-21T08:34:35.553Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "IAuthService.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Services\\IAuthService.cs",
+              "RelativeDocumentMoniker": "backend-dotnet\\Services\\IAuthService.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Services\\IAuthService.cs",
+              "RelativeToolTip": "backend-dotnet\\Services\\IAuthService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-21T08:32:20.111Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "ICustomerRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Repositories\\ICustomerRepository.cs",
+              "RelativeDocumentMoniker": "backend-dotnet\\Repositories\\ICustomerRepository.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Repositories\\ICustomerRepository.cs",
+              "RelativeToolTip": "backend-dotnet\\Repositories\\ICustomerRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAYAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-21T08:32:59.712Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Services\\AuthService.cs",
+              "RelativeDocumentMoniker": "backend-dotnet\\Services\\AuthService.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Services\\AuthService.cs",
+              "RelativeToolTip": "backend-dotnet\\Services\\AuthService.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAASwCIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-21T08:32:46.344Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "backend-dotnet\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "backend-dotnet\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-21T08:28:03.137Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "OrderController.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Controllers\\OrderController.cs",
+              "RelativeDocumentMoniker": "backend-dotnet\\Controllers\\OrderController.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Controllers\\OrderController.cs",
+              "RelativeToolTip": "backend-dotnet\\Controllers\\OrderController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-21T08:28:02.323Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SalesController.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Controllers\\SalesController.cs",
+              "RelativeDocumentMoniker": "backend-dotnet\\Controllers\\SalesController.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Controllers\\SalesController.cs",
+              "RelativeToolTip": "backend-dotnet\\Controllers\\SalesController.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAwwEEAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-18T12:31:26.812Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SalesRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Repositories\\SalesRepository.cs",
+              "RelativeDocumentMoniker": "backend-dotnet\\Repositories\\SalesRepository.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Downloads\\ERP\\backend-dotnet\\backend-dotnet\\Repositories\\SalesRepository.cs",
+              "RelativeToolTip": "backend-dotnet\\Repositories\\SalesRepository.cs",
+              "ViewState": "AgIAALAAAAAAAAAAAAAAALsAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-18T12:30:26.961Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

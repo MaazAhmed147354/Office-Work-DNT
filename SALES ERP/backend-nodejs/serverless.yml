@@ -1,0 +1,79 @@
+service: backend
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  environment:
+    DB_HOST: ${env:DB_HOST, 'localhost'}
+    DB_NAME: ${env:DB_NAME, 'your_database'}
+    DB_USER: ${env:DB_USER, 'your_username'}
+    DB_PASSWORD: ${env:DB_PASSWORD, 'your_password'}
+    JWT_SECRET: ${env:JWT_SECRET, 'your-secret-key'}
+
+functions:
+  hello:
+    handler: src/handlers/helloHandler.hello
+    timeout: 30
+    events:
+      - http:
+          path: hello
+          method: get
+          cors:
+            origin: 'http://localhost:3000'
+            headers:
+              - Content-Type
+              - Authorization
+              - X-Custom-Header
+
+  loginUser:
+    handler: src/handlers/authHandler.loginUser
+    timeout: 30
+    events:
+      - http:
+          path: auth/login
+          method: post
+          cors:
+            origin:
+              - http://localhost:3000
+            headers:
+              - Content-Type
+              - Authorization
+              - X-Custom-Header
+            allowCredentials: true
+
+  registerUser:
+    handler: src/handlers/authHandler.registerUser
+    timeout: 30
+    events:
+      - http:
+          path: auth/register
+          method: post
+          cors:
+            origin:
+              - http://localhost:3000
+            headers:
+              - Content-Type
+              - Authorization
+              - X-Custom-Header
+            allowCredentials: true
+
+  logoutUser:
+    handler: src/handlers/authHandler.logoutUser
+    timeout: 30
+    events:
+      - http:
+          path: auth/logout
+          method: post
+          cors:
+            origin:
+              - http://localhost:3000
+            headers:
+              - Content-Type
+              - Authorization
+              - X-Custom-Header
+            allowCredentials: true
+
+plugins:
+  - serverless-offline

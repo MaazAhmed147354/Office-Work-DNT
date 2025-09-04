@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+/* Login Form Heading Typewriter animation */
+.typewriter {
+  overflow: hidden; /* hides text until animation reveals it */
+  border-right: 0.15em solid #8a4fff; /* cursor */
+  white-space: nowrap;
+  letter-spacing: 0.05em;
+  animation: typing 2.5s steps(20, end), blinkCursor 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 50%;
+  }
+}
+
+@keyframes blinkCursor {
+  from, to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: #8a4fff;
+  }
+}
+
+/* Fade-in animation */
+.animate-fadeIn {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Gradient animation */
+.bg-size-200 {
+  background-size: 200% auto;
+}
+.bg-pos-0 {
+  background-position: 0% center;
+}
+.hover\:bg-pos-100:hover {
+  background-position: 100% center;
+}
+
+/* Background image styling */
+.bg-login {
+  background-image: url("/login-bg4.jpg"); /* Place in public folder */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+/* Slight dark overlay for readability */
+.bg-login::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35); /* Adjust darkness */
+  backdrop-filter: blur(4px); /* Blur the background slightly */
+  z-index: 0;
+}
+
+/*.login-form {
+  position: relative;
+  z-index: 1; /* Ensure form stays above background overlay */
+/*}*/
+
+.login-form {
+  background: rgba(37, 37, 56, 0.4); /* Transparent */
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}

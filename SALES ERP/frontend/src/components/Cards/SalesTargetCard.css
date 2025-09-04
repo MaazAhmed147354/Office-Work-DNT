@@ -1,0 +1,23 @@
+.battery-target-card .liquid-fill {
+  transition: height 700ms ease-in-out;
+  overflow: hidden;
+}
+
+/* Wave fill animation */
+.battery-target-card .wave-front {
+  position: absolute;
+  left: -50%;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  animation: waveFrontMove 12s linear infinite alternate;
+  filter: blur(0.08px); /* hides seams */
+}
+
+.battery-target-card .wave-front path {
+  shape-rendering: auto;
+}
+
+@keyframes waveFrontMove {
+  from { transform: translateX(0%); }
+  to   { transform: translateX(-60%); }
+}

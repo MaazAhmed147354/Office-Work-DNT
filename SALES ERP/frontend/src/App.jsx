@@ -16,7 +16,7 @@ import "./App.css";
 
 function App() {
   return (
-    <div className="min-h-screen p-0 bg-[#1e1e2d]">
+    <div className="min-h-screen p-0 bg-[#1e1e2d] custom-scrollbar">
       <SidebarProvider>
         <BrowserRouter>
           <Routes>

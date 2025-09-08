@@ -35,6 +35,6 @@ export { default as PrivateRoute } from "./Routes/PrivateRoute";
 
 export { default as SpinnerLoader } from "./Loaders/SpinnerLoader";
 
-export { default as CustomToast } from "./OtherComponents/CustomToast";
+export { default as Toast } from "./OtherComponents/Toast";
 export { default as Accordion } from "./OtherComponents/Accordion";
 export { default as CustomDropdown } from "./OtherComponents/CustomDropdown";

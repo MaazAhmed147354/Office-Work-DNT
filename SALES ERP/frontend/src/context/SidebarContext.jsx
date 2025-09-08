@@ -2,7 +2,7 @@ import { createContext, useState, useContext, useEffect } from "react";
 
 const SidebarContext = createContext();
 
-export const SidebarProvider = ({ children }) => {
+const SidebarProvider = ({ children }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const toggleSidebar = () => {
@@ -30,3 +30,5 @@ export const SidebarProvider = ({ children }) => {
 export const useSidebar = () => {
   return useContext(SidebarContext);
 };
+
+export default SidebarProvider;

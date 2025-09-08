@@ -1,5 +1,6 @@
-import { parseISO, format, startOfWeek, addWeeks } from "date-fns";
-import { useState, useEffect, useMemo } from "react";
+import { format, startOfWeek, addWeeks } from "date-fns";
+import { useState, useEffect, useMemo, useRef } from "react";
+import { useToast } from "../context/ToastContext";
 import {
   SpinnerLoader,
   FilterDataCard,
@@ -7,7 +8,6 @@ import {
   Accordion,
   SalesContributionChartCard,
   RadarChartCard,
-  CustomToast,
 } from "../components";
 import AnalyticsService from "../services/analyticsService";
 
@@ -16,18 +16,20 @@ const AnalyticsSales = () => {
   const [selectedTab, setSelectedTab] = useState("year");
   const [selectedValue, setSelectedValue] = useState(null);
   // State for salesperson filter
-  const [salespersons, setSalespersons] = useState([]); // Fetched list from API
+  const [salespersons, setSalespersons] = useState([]);
   const [selectedSalesIds, setSelectedSalesIds] = useState([]);
   // State for sales data
-  const [analysisData, setAnalysisData] = useState([]); // Raw data from GetSalesAnalysis
+  const [analysisData, setAnalysisData] = useState([]);
+  // State for page load
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
-  const [toastType, setToastType] = useState("info");
+  const { showToast } = useToast();
 
-  // Fetch salespersons on component mount
+  // Ref to track if we've successfully fetched data at least once
+  const hasFetchedOnce = useRef(false);
+
+  // Fetch salespersons list
   useEffect(() => {
     const fetchSalespersons = async () => {
       try {
@@ -56,10 +58,11 @@ const AnalyticsSales = () => {
     const fetchAnalyticsData = async () => {
       // Don't fetch if no salespersons selected or filters are incomplete
       if (selectedSalesIds.length === 0 || !selectedTab || !selectedValue) {
-        setToastMessage("Please select at least one salesperson.");
-        setToastType("warning");
-        setShowToast(true);
-        setAnalysisData([]); // Clear previous data
+        setAnalysisData([]);
+        // Only show toast if we've successfully fetched before
+        if (hasFetchedOnce.current) {
+          showToast("Please select all filters", "warning");
+        }
         return;
       }
 
@@ -105,6 +108,7 @@ const AnalyticsSales = () => {
         );
 
         setAnalysisData(data);
+        hasFetchedOnce.current = true;
       } catch (err) {
         setError("Failed to load analytics data.");
         console.error(err);
@@ -218,14 +222,6 @@ const AnalyticsSales = () => {
           <Accordion data={accordionData} />
         </div>
       </div>
-      {/* Toast */}
-      {showToast && (
-        <CustomToast
-          message={toastMessage}
-          type={toastType}
-          onClose={() => setShowToast(false)}
-        />
-      )}
     </div>
   );
 };

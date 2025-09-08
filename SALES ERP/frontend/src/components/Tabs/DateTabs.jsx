@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import CustomDropdown from "../OtherComponents/CustomDropdown";
 
 const DateTabCard = ({
   selectedTab,
@@ -9,6 +10,27 @@ const DateTabCard = ({
   const [showPicker, setShowPicker] = useState(false);
   const [activeTab, setActiveTab] = useState(null);
   const wrapperRef = useRef(null);
+
+  // Generate years and quarter options
+  const quarterOptions = [
+    { value: "Q1", label: "Q1 (Jan–Mar)" },
+    { value: "Q2", label: "Q2 (Apr–Jun)" },
+    { value: "Q3", label: "Q3 (Jul–Sep)" },
+    { value: "Q4", label: "Q4 (Oct–Dec)" },
+  ];
+  const generateYears = () => {
+    const currentYear = new Date().getFullYear();
+    const options = [];
+    for (let year = 2000; year <= currentYear; year++) {
+      options.push({
+        value: year.toString(), // value as string "2025"
+        label: year.toString(), // label as string "2025"
+      });
+    }
+    return options;
+  };
+
+  const yearsOptions = generateYears();
 
   const handleTabClick = (tab) => {
     if (activeTab === tab && showPicker) {
@@ -49,7 +71,7 @@ const DateTabCard = ({
   return (
     <div
       ref={wrapperRef}
-      className="bg-[#252538] p-4 rounded-xl border border-[#38384a]"
+      className="bg-[#252538] p-4 rounded-xl border-none border-[#38384a]"
     >
       <div className="flex justify-center gap-6">
         {["year", "month", "week", "quarter"].map((tab) => (
@@ -69,13 +91,12 @@ const DateTabCard = ({
             {showPicker && activeTab === tab && (
               <>
                 {tab === "year" && (
-                  <input
-                    type="number"
-                    min="2000"
-                    max="2100"
-                    placeholder="Year"
-                    className="p-2 rounded bg-[#1e1e2f] text-gray-200"
-                    onChange={(e) => handleValueChange(e.target.value)}
+                  <CustomDropdown
+                    key="year-dropdown"
+                    onSelect={handleValueChange}
+                    selectedValue={selectedTab === "year" ? selectedValue : ""}
+                    options={yearsOptions}
+                    placeholder="Select Year"
                   />
                 )}
                 {tab === "month" && (
@@ -93,16 +114,15 @@ const DateTabCard = ({
                   />
                 )}
                 {tab === "quarter" && (
-                  <select
-                    className="p-2 rounded bg-[#1e1e2f] text-gray-200"
-                    onChange={(e) => handleValueChange(e.target.value)}
-                  >
-                    <option value="">Select Quarter</option>
-                    <option value="Q1">Q1 (Jan–Mar)</option>
-                    <option value="Q2">Q2 (Apr–Jun)</option>
-                    <option value="Q3">Q3 (Jul–Sep)</option>
-                    <option value="Q4">Q4 (Oct–Dec)</option>
-                  </select>
+                  <CustomDropdown
+                    key="quarter-dropdown"
+                    onSelect={handleValueChange}
+                    selectedValue={
+                      selectedTab === "quarter" ? selectedValue : ""
+                    }
+                    options={quarterOptions}
+                    placeholder="Select Quarter"
+                  />
                 )}
               </>
             )}

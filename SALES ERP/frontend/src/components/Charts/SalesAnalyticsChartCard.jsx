@@ -8,7 +8,8 @@ const SalesAnalyticsChartCard = ({ tab, value, data }) => {
   //       </div>
   //     );
   //   }
-
+  console.log("Chart Data: ", data);
+  
   const labels = data.map((item) => item.label);
   const sales = data.map((item) => item.totalSales);
   console.log("Sales Tab: ", tab);

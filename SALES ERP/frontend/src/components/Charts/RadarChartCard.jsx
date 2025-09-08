@@ -10,14 +10,14 @@ const RadarChartCard = ({ className = "" }) => {
       <h3 className="text-lg font-semibold text-[#BEB7DF] mb-4">
         Performance Comparison
       </h3>
-      <div className="h-64">
-        <GlobalChart
+        <div className="h-96">
+          <GlobalChart
           type="radar"
           labels={radarData.labels}
           datasets={radarData.datasets}
           options={radarChartBaseConfig.options}
         />
-      </div>
+        </div>
     </div>
   );
 };

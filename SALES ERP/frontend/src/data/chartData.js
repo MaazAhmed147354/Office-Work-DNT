@@ -20,19 +20,27 @@ export const polarAreaData = {
 
 // Radar static data (used by RadarChartCard)
 export const radarData = {
-  labels: ["Speed", "Reliability", "Comfort", "Safety", "Efficiency"],
+  labels: ["Sales", "Orders", "Contribution"],
   datasets: [
     {
-      label: "Model S",
-      data: [90, 85, 95, 80, 70],
+      label: "Model 1",
+      data: [90, 45, 95],
       backgroundColor: "rgba(138,79,255,0.25)",
       borderColor: "#8a4fff",
       borderWidth: 2,
       pointBackgroundColor: "#8a4fff",
     },
     {
+      label: "Model 2",
+      data: [70, 82, 19],
+      backgroundColor: "rgba(112,8,231,0.2)",
+      borderColor: "#0084d1",
+      borderWidth: 2,
+      pointBackgroundColor: "#4adeff",
+    },
+    {
       label: "Model 3",
-      data: [70, 82, 91, 92, 89],
+      data: [20, 81, 55],
       backgroundColor: "rgba(74,222,255,0.2)",
       borderColor: "#4adeff",
       borderWidth: 2,

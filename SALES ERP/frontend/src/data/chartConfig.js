@@ -70,6 +70,8 @@ export const radarChartBaseConfig = {
 // Base Polar Area Chart Config
 export const polarAreaChartBaseConfig = {
   options: {
+    responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: "right",

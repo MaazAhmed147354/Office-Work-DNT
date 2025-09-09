@@ -22,7 +22,6 @@ class DashboardService {
           },
         }
       );
-      console.log(res.data.result.result);
 
       return res.data.result.result;
     } catch (err) {
@@ -50,7 +49,6 @@ class DashboardService {
           },
         }
       );
-      console.log(res.data);
 
       return res.data;
     } catch (err) {
@@ -75,7 +73,6 @@ class DashboardService {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(res.data);
 
       return res.data;
     } catch (err) {
@@ -103,7 +100,6 @@ class DashboardService {
           },
         }
       );
-      console.log(res.data);
 
       return res.data;
     } catch (err) {

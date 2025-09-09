@@ -3,66 +3,49 @@ import { useState, useEffect, useMemo, useRef } from "react";
 import { useToast } from "../context/ToastContext";
 import {
   SpinnerLoader,
-  FilterDataCard,
+  ViewToggle,
   SalesAnalyticsChartCard,
   Accordion,
   SalesContributionChartCard,
-  RadarChartCard,
 } from "../components";
-import AnalyticsService from "../services/analyticsService";
+import analyticsService from "../services/analyticsService";
 
-const AnalyticsSales = () => {
-  // State for date filters
-  const [selectedTab, setSelectedTab] = useState("year");
-  const [selectedValue, setSelectedValue] = useState(null);
-  // State for salesperson filter
-  const [salespersons, setSalespersons] = useState([]);
-  const [selectedSalesIds, setSelectedSalesIds] = useState([]);
-  // State for sales data
-  const [analysisData, setAnalysisData] = useState([]);
+const AnalyticsSales = ({
+  selectedTab,
+  selectedValue,
+  selectedSalespersonIds,
+  analysisData,
+  setAnalysisData,
+}) => {
   // State for page load
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const [viewMode, setViewMode] = useState("graphical");
+
   const { showToast } = useToast();
 
-  // Ref to track if we've successfully fetched data at least once
-  const hasFetchedOnce = useRef(false);
-
-  // Fetch salespersons list
-  useEffect(() => {
-    const fetchSalespersons = async () => {
-      try {
-        setIsLoading(true);
-        const data = await AnalyticsService.getSalespersonList();
-        console.log("SalesPersonList: ", data);
-
-        setSalespersons(data);
-
-        // Initialize selection with all salespersons
-        const initialIds = data.map((sp) => sp.id);
-        setSelectedSalesIds(initialIds);
-      } catch (err) {
-        setError("Failed to load salespersons.");
-        console.error(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchSalespersons();
-  }, []);
+  const didMount = useRef(false);
 
   // Fetch analytics data when filters change
   useEffect(() => {
+    // Skip first load - handled in parent
+    if (!didMount.current) {
+      didMount.current = true;
+      return;
+    }
+
     const fetchAnalyticsData = async () => {
+      console.log("Initial fetch hi hai, you cant do anything");
+
       // Don't fetch if no salespersons selected or filters are incomplete
-      if (selectedSalesIds.length === 0 || !selectedTab || !selectedValue) {
+      if (
+        selectedSalespersonIds.length === 0 ||
+        !selectedTab ||
+        !selectedValue
+      ) {
         setAnalysisData([]);
-        // Only show toast if we've successfully fetched before
-        if (hasFetchedOnce.current) {
-          showToast("Please select all filters", "warning");
-        }
+        showToast("Please select all filters", "warning");
         return;
       }
 
@@ -101,14 +84,13 @@ const AnalyticsSales = () => {
           referenceDate = `${year}-${quarterMap[selectedValue]}-01`;
         }
 
-        const data = await AnalyticsService.GetSalesAnalysis(
-          selectedSalesIds,
+        const data = await analyticsService.GetSalesAnalysis(
+          selectedSalespersonIds,
           rangeType,
           referenceDate
         );
 
         setAnalysisData(data);
-        hasFetchedOnce.current = true;
       } catch (err) {
         setError("Failed to load analytics data.");
         console.error(err);
@@ -118,7 +100,7 @@ const AnalyticsSales = () => {
     };
 
     fetchAnalyticsData();
-  }, [selectedTab, selectedValue, selectedSalesIds]);
+  }, [selectedTab, selectedValue, selectedSalespersonIds]);
 
   // Transform raw API data for the chart (grouped by salesperson)
   const chartData = useMemo(() => {
@@ -183,44 +165,33 @@ const AnalyticsSales = () => {
   ) : (
     <div className="flex flex-col min-h-full">
       <div className="flex-1">
-        {/* Filter Sections */}
-        <div className="mb-6">
-          <FilterDataCard
-            selectedTab={selectedTab}
-            setSelectedTab={setSelectedTab}
-            selectedValue={selectedValue}
-            setSelectedValue={setSelectedValue}
-            salespersons={salespersons}
-            selectedSalesIds={selectedSalesIds}
-            setSelectedSalesIds={setSelectedSalesIds}
-          />
-        </div>
+        {/* View Toggle */}
+        <ViewToggle onToggle={setViewMode} viewMode={viewMode} />
 
-        {/* Chart Section */}
-        <div className="grid grid-cols-2 grid-rows-2 md:grid-rows-1 gap-6 mb-6">
-          <div className="col-span-2 lg:col-span-1">
-            <SalesAnalyticsChartCard
-              tab={selectedTab}
-              value={selectedValue}
-              data={chartData}
-            />
+        {viewMode === "graphical" ? (
+          /* Graphical Section */
+          <div className="grid grid-cols-2 grid-rows-2 md:grid-rows-1 gap-6">
+            <div className="col-span-2 lg:col-span-1">
+              <SalesAnalyticsChartCard
+                tab={selectedTab}
+                value={selectedValue}
+                data={chartData}
+              />
+            </div>
+            <div className="col-span-2 lg:col-span-1">
+              <SalesContributionChartCard
+                tab={selectedTab}
+                value={selectedValue}
+                data={chartData}
+              />
+            </div>
           </div>
-          <div className="col-span-2 lg:col-span-1">
-            <SalesContributionChartCard
-              tab={selectedTab}
-              value={selectedValue}
-              data={chartData}
-            />
+        ) : (
+          /* Tabular Section */
+          <div className="grid grid-cols-1 gap-6">
+            <Accordion data={accordionData} />
           </div>
-          <div>
-            <RadarChartCard />
-          </div>
-        </div>
-
-        {/* Accordions */}
-        <div className="grid grid-cols-1 gap-6">
-          <Accordion data={accordionData} />
-        </div>
+        )}
       </div>
     </div>
   );

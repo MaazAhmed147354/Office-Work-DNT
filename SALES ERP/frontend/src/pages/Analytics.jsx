@@ -1,11 +1,55 @@
-import { useState } from "react";
-import { AnalyticsTabs } from "../components";
+import { format } from "date-fns";
+import { useState, useEffect } from "react";
+import { useToast } from "../context/ToastContext";
+import { AnalyticsTabs, FilterDataCard } from "../components";
 import AnalyticsSales from "./AnalyticsSales";
 import AnalyticsProducts from "./AnalyticsProducts";
 import AnalyticsSalesperson from "./AnalyticsSalesperson";
+import analyticsService from "../services/analyticsService";
 
 const Analytics = () => {
-  const [activeTab, setActiveTab] = useState("sales"); // default tab
+  const [isLoading, setIsLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState("sales");
+  // ✅ Shared filter states
+  const [selectedTab, setSelectedTab] = useState("week");
+  const [selectedValue, setSelectedValue] = useState(null);
+  const [salespersons, setSalespersons] = useState([]);
+  const [selectedSalespersonIds, setSelectedSalespersonIds] = useState([]);
+  const [analysisData, setAnalysisData] = useState([]);
+
+  const { showToast } = useToast();
+
+  useEffect(() => {
+    // Fetch salespersons list once when Analytics loads
+    const fetchInitialData = async () => {
+      try {
+        setIsLoading(true);
+
+        const list = await analyticsService.getSalespersonList();
+        setSalespersons(list);
+
+        const initialIds = list.map((sp) => sp.id);
+        setSelectedSalespersonIds(initialIds);
+
+        const today = new Date();
+        const referenceDate = format(today, "yyyy-MM-dd");
+
+        const data = await analyticsService.GetSalesAnalysis(
+          selectedSalespersonIds,
+          "weekly",
+          referenceDate
+        );
+        setAnalysisData(data);
+
+        showToast("Sales Analytics data fetched", "success");
+      } catch (err) {
+        console.error("Failed to load salespersons list:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchInitialData();
+  }, []);
 
   return (
     <div className="flex flex-col min-h-full">
@@ -13,10 +57,54 @@ const Analytics = () => {
         {/* Tabs only control state */}
         <AnalyticsTabs activeTab={activeTab} onTabChange={setActiveTab} />
 
+        {/* ✅ Shared Filter Card */}
+        <div className="mb-4">
+          <FilterDataCard
+            selectedTab={selectedTab}
+            setSelectedTab={setSelectedTab}
+            selectedValue={selectedValue}
+            setSelectedValue={setSelectedValue}
+            salespersons={salespersons}
+            selectedSalespersonIds={selectedSalespersonIds}
+            setSelectedSalespersonIds={setSelectedSalespersonIds}
+          />
+        </div>
+
         {/* Analytics decides what to render */}
-        {activeTab === "sales" && <AnalyticsSales />}
-        {activeTab === "salespersons" && <AnalyticsSalesperson />}
-        {activeTab === "products" && <AnalyticsProducts />}
+        {activeTab === "sales" && (
+          <AnalyticsSales
+            selectedTab={selectedTab}
+            selectedValue={selectedValue}
+            selectedSalesIds={selectedSalespersonIds}
+            analysisData={analysisData}
+            setAnalysisData={setAnalysisData}
+          />
+        )}
+        {activeTab === "salespersons" && (
+          <AnalyticsSalesperson
+            selectedTab={selectedTab}
+            // setSelectedTab={setSelectedTab}
+            selectedValue={selectedValue}
+            // setSelectedValue={setSelectedValue}
+            // salespersons={salespersons}
+            selectedSalesIds={selectedSalespersonIds}
+            setSelectedSalesIds={setSelectedSalespersonIds}
+            salespersons={salespersons}
+            setSalespersons={setSalespersons}
+          />
+        )}
+        {activeTab === "products" && (
+          <AnalyticsProducts
+            selectedTab={selectedTab}
+            // setSelectedTab={setSelectedTab}
+            selectedValue={selectedValue}
+            // setSelectedValue={setSelectedValue}
+            // salespersons={salespersons}
+            selectedSalesIds={selectedSalesIds}
+            setSelectedSalesIds={setSelectedSalesIds}
+            setSalespersons={setSalespersons}
+          />
+        )}
       </div>
     </div>
   );

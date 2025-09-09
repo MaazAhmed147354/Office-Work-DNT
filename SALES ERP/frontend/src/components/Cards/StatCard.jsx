@@ -23,7 +23,6 @@ const StatCard = ({
   //     </div>
   //   );
   // }
-  console.log("Woof");
 
   const IconComponent = iconComponents[icon] || Star;
 

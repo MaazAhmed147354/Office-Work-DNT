@@ -74,7 +74,7 @@ const DateTabCard = ({
       className="bg-[#252538] p-4 rounded-xl border-none border-[#38384a]"
     >
       <div className="flex justify-center gap-6">
-        {["year", "month", "week", "quarter"].map((tab) => (
+        {["week", "month", "quarter", "year"].map((tab) => (
           <div key={tab} className="flex items-center gap-3">
             <button
               onClick={() => handleTabClick(tab)}

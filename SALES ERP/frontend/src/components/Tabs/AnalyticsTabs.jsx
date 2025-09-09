@@ -6,7 +6,7 @@ const AnalyticsTabs = ({ activeTab, onTabChange }) => {
   ];
 
   return (
-    <div className="rounded-xl p-0 mb-6">
+    <div className="rounded-xl p-0 mb-4">
       <div className="flex space-x-1">
         {tabs.map((tab) => (
           <button

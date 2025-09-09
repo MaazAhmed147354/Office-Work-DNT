@@ -33,7 +33,7 @@ const GlobalChart = ({ type, labels, datasets, options = {} }) => {
   }, [type, labels, datasets, options]);
 
   return (
-    <div className="h-96">
+    <div className="h-64">
       <canvas ref={chartRef} />
     </div>
   );

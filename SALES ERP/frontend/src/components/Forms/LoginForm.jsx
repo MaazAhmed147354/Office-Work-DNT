@@ -1,7 +1,8 @@
 import { useState } from "react";
-import authService from "../../services/authService";
 import { useNavigate } from "react-router-dom";
 import { Lock, User } from "lucide-react";
+import { useToast } from "../../context/ToastContext";
+import authService from "../../services/authService";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -9,6 +10,8 @@ const LoginForm = () => {
   const [errorMsg, setErrorMsg] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
+  const { showToast } = useToast();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,6 +25,7 @@ const LoginForm = () => {
       } else {
         navigate("/products");
       }
+      showToast("Logged In", "info");
     } else {
       setErrorMsg(res.message);
     }

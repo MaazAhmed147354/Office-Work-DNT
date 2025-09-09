@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useToast } from "../context/ToastContext";
 import {
   SalesPersonChartCard,
   ProductSalesChartCard,
@@ -16,6 +17,8 @@ const Dashboard = () => {
   const [salesByMonth, setSalesByMonth] = useState([]);
   const [statCardData, setStatCardData] = useState([]);
   const [loading, setLoading] = useState(true); // ✅ Global Loader state
+
+  const { showToast } = useToast();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -65,7 +68,9 @@ const Dashboard = () => {
               classname: "bg-sky-600",
             },
           ]);
+
         }
+        showToast("Dashboard data fetched", "success");
       } catch (err) {
         console.error("Error loading dashboard data:", err);
         setStatCardData([{}, {}, {}]);

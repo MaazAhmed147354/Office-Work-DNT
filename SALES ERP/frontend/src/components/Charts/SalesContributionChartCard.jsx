@@ -2,8 +2,6 @@ import GlobalChart from "./GlobalChart";
 import { polarAreaChartBaseConfig } from "../../data/chartConfig";
 
 const SalesContributionChartCard = ({ tab, value, data }) => {
-  console.log("Polar Data: ", data);
-
   const labels = data.map((item) => item.label);
   const contribution = data.map((item) => item.totalContribution);
 
@@ -59,7 +57,7 @@ const SalesContributionChartCard = ({ tab, value, data }) => {
           "rgb(173, 70, 255, 0.25)",
           "rgb(0, 117, 149, 0.25)",
           "rgb(112, 8, 231, 0.5)",
-          "rgb(0, 132, 209, 0.6)"
+          "rgb(0, 132, 209, 0.6)",
         ],
         borderColor: ["#c27aff", "#00b8db", "#8e51ff", "#0084d1"],
         borderWidth: 2, // Thin border instead of glowing effect

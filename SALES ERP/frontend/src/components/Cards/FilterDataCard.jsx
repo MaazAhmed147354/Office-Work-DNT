@@ -13,7 +13,6 @@ const FilterDataCard = ({
   setSelectedSalespersonIds,
 }) => {
   const [isSalesModalOpen, setIsSalesModalOpen] = useState(false);
-  console.log("FilterData:", salespersons);
 
   return (
     <div>
@@ -42,8 +41,8 @@ const FilterDataCard = ({
         isOpen={isSalesModalOpen}
         onClose={() => setIsSalesModalOpen(false)}
         salespersons={salespersons}
-        selectedSalesIds={selectedSalespersonIds}
-        onSelectionChange={setSelectedSalespersonIds}
+        selectedSalespersonIds={selectedSalespersonIds}
+        setSelectedSalespersonIds={setSelectedSalespersonIds}
       />
     </div>
   );

@@ -4,22 +4,24 @@ const SalespersonModal = ({
   isOpen,
   onClose,
   salespersons = [],
-  selectedSalesIds = [],
-  onSelectionChange,
+  selectedSalespersonIds = [],
+  setSelectedSalespersonIds,
 }) => {
   // Local state to track selections before applying
-  const [localSelectedIds, setLocalSelectedIds] = useState(selectedSalesIds);
+  const [localSelectedIds, setLocalSelectedIds] = useState(
+    selectedSalespersonIds
+  );
 
-  // Update local state when modal opens or parent selectedSalesIds changes
+  // Update local state when modal opens or parent selectedSalespersonIds changes
   useEffect(() => {
-    setLocalSelectedIds(selectedSalesIds);
-  }, [selectedSalesIds, isOpen]); // Reset when modal opens or parent selection changes
+    setLocalSelectedIds(selectedSalespersonIds);
+  }, [selectedSalespersonIds, isOpen]); // Reset when modal opens or parent selection changes
 
   // Handle checkbox change
   const handleCheckboxChange = (id) => {
-    const newSelectedIds = selectedSalesIds.includes(id)
-      ? selectedSalesIds.filter((selectedId) => selectedId !== id)
-      : [...selectedSalesIds, id];
+    const newSelectedIds = localSelectedIds.includes(id)
+      ? localSelectedIds.filter((selectedId) => selectedId !== id)
+      : [...localSelectedIds, id];
 
     setLocalSelectedIds(newSelectedIds);
   };
@@ -35,8 +37,15 @@ const SalespersonModal = ({
 
   // Apply the selection and close modal
   const handleApply = () => {
-    onSelectionChange(localSelectedIds); // Update parent state
-    onClose(); // Close modal
+    // Compare if change is different than the previous state
+    const isSame =
+      localSelectedIds.length === selectedSalespersonIds.length &&
+      localSelectedIds.every((id) => selectedSalespersonIds.includes(id));
+    if (!isSame) {
+      setSelectedSalespersonIds(localSelectedIds); // Update parent state
+    }
+
+    onClose();
   };
 
   // Check if all are selected for the "Select All" checkbox

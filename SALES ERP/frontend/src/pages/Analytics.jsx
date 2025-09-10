@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import { useState, useEffect } from "react";
 import { useToast } from "../context/ToastContext";
-import { AnalyticsTabs, FilterDataCard } from "../components";
+import { SpinnerLoader, AnalyticsTabs, FilterDataCard } from "../components";
 import AnalyticsSales from "./AnalyticsSales";
 import AnalyticsProducts from "./AnalyticsProducts";
 import AnalyticsSalesperson from "./AnalyticsSalesperson";
@@ -20,7 +20,7 @@ const Analytics = () => {
   const { showToast } = useToast();
 
   useEffect(() => {
-    // Fetch salespersons list once when Analytics loads
+    // Fetch salespersons list and initial data
     const fetchInitialData = async () => {
       try {
         setIsLoading(true);
@@ -35,7 +35,7 @@ const Analytics = () => {
         const referenceDate = format(today, "yyyy-MM-dd");
 
         const data = await analyticsService.GetSalesAnalysis(
-          selectedSalespersonIds,
+          initialIds,
           "weekly",
           referenceDate
         );
@@ -51,7 +51,9 @@ const Analytics = () => {
     fetchInitialData();
   }, []);
 
-  return (
+  return isLoading == true ? (
+    <SpinnerLoader label="Loading analytics..." />
+  ) : (
     <div className="flex flex-col min-h-full">
       <div className="flex-1">
         {/* Tabs only control state */}
@@ -75,7 +77,7 @@ const Analytics = () => {
           <AnalyticsSales
             selectedTab={selectedTab}
             selectedValue={selectedValue}
-            selectedSalesIds={selectedSalespersonIds}
+            selectedSalespersonIds={selectedSalespersonIds}
             analysisData={analysisData}
             setAnalysisData={setAnalysisData}
           />
@@ -88,7 +90,7 @@ const Analytics = () => {
             // setSelectedValue={setSelectedValue}
             // salespersons={salespersons}
             selectedSalesIds={selectedSalespersonIds}
-            setSelectedSalesIds={setSelectedSalespersonIds}
+            setSelectedSalespersonIds={setSelectedSalespersonIds}
             salespersons={salespersons}
             setSalespersons={setSalespersons}
           />
@@ -100,8 +102,8 @@ const Analytics = () => {
             selectedValue={selectedValue}
             // setSelectedValue={setSelectedValue}
             // salespersons={salespersons}
-            selectedSalesIds={selectedSalesIds}
-            setSelectedSalesIds={setSelectedSalesIds}
+            selectedSalespersonIds={selectedSalespersonIds}
+            setSelectedSalesIds={setSelectedSalespersonIds}
             setSalespersons={setSalespersons}
           />
         )}

@@ -36,8 +36,6 @@ const AnalyticsSales = ({
     }
 
     const fetchAnalyticsData = async () => {
-      console.log("Initial fetch hi hai, you cant do anything");
-
       // Don't fetch if no salespersons selected or filters are incomplete
       if (
         selectedSalespersonIds.length === 0 ||
@@ -45,7 +43,7 @@ const AnalyticsSales = ({
         !selectedValue
       ) {
         setAnalysisData([]);
-        showToast("Please select all filters", "warning");
+        showToast("Child: Please select all filters", "warning");
         return;
       }
 
@@ -89,8 +87,9 @@ const AnalyticsSales = ({
           rangeType,
           referenceDate
         );
-
         setAnalysisData(data);
+
+        showToast("Child: Sales Analytics data fetched", "success");
       } catch (err) {
         setError("Failed to load analytics data.");
         console.error(err);
@@ -150,8 +149,6 @@ const AnalyticsSales = ({
       acc[key].sales.push(curr);
       return acc;
     }, {});
-
-    console.log("Combined Data: ", Object.values(grouped));
 
     return Object.values(grouped);
   }, [analysisData]);

@@ -1,72 +1,209 @@
-import { useState } from "react";
-import { GlobalChart } from "../components";
+import { startOfWeek, addWeeks, format } from "date-fns";
+import { useState, useEffect, useMemo, useRef } from "react";
+import { useToast } from "../context/ToastContext";
+import {
+  SpinnerLoader,
+  CustomDropdown,
+  SalesComparisonChartCard,
+} from "../components";
+import analyticsService from "../services/analyticsService";
 
 const AnalyticsSalesperson = ({
   selectedTab,
   selectedValue,
-  selectedSalesIds,
-  setSelectedSalesIds,
-  setSalespersons,
+  salespersons,
+  selectedSalespersonIds,
+  analysisData,
+  setAnalysisData,
 }) => {
+  // State for page load
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   const [selectedSalesperson1, setSelectedSalesperson1] = useState("");
   const [selectedSalesperson2, setSelectedSalesperson2] = useState("");
   const [chartData, setChartData] = useState(null);
 
-  const handleCompare = async () => {
-    if (!selectedSalesperson1 || !selectedSalesperson2) return;
+  const { showToast } = useToast();
 
-    // Prepare chart data
+  const didMount = useRef(false);
+
+  useEffect(() => {
+    // Skip first load - fetched in parent
+    if (!didMount.current) {
+      didMount.current = true;
+      return;
+    }
+
+    const fetchAnalyticsData = async () => {
+      // Don't fetch if no salespersons selected or filters are incomplete
+      if (
+        selectedSalespersonIds.length === 0 ||
+        !selectedTab ||
+        !selectedValue
+      ) {
+        setAnalysisData([]);
+        showToast("Please select all filters", "warning");
+        return;
+      }
+
+      try {
+        setIsLoading(true);
+        setError(null);
+
+        // Map UI tab values to API rangeType
+        const rangeTypeMap = {
+          year: "yearly",
+          month: "monthly",
+          week: "weekly",
+          quarter: "quarterly",
+        };
+        const rangeType = rangeTypeMap[selectedTab];
+
+        // Format referenceDate based on selectedTab and selectedValue
+        let referenceDate;
+        if (selectedTab === "year") {
+          referenceDate = `${selectedValue}-01-01`; // YYYY-01-01
+        } else if (selectedTab === "month") {
+          referenceDate = `${selectedValue}-01`; // YYYY-MM-01
+        } else if (selectedTab === "week") {
+          console.log("Week Date ", selectedValue);
+          // Using date-fns library
+          const year = selectedValue.substring(0, 4);
+          const weekNum = parseInt(selectedValue.substring(6));
+          // Create date for first week of the year
+          const firstWeek = startOfWeek(new Date(parseInt(year), 0, 1));
+          const targetDate = addWeeks(firstWeek, weekNum - 1);
+          referenceDate = format(targetDate, "yyyy-MM-dd");
+        } else if (selectedTab === "quarter") {
+          // Mapping to first date of selected quarter
+          const quarterMap = { Q1: "01", Q2: "04", Q3: "07", Q4: "10" };
+          const year = new Date().getFullYear(); // You might need to get year from somewhere
+          referenceDate = `${year}-${quarterMap[selectedValue]}-01`;
+        }
+
+        const data = await analyticsService.GetSalesAnalysis(
+          selectedSalespersonIds,
+          rangeType,
+          referenceDate
+        );
+        setAnalysisData(data);
+
+        showToast("Sales Analytics data fetched", "success");
+      } catch (err) {
+        setError("Failed to load analytics data.");
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchAnalyticsData();
+  }, [selectedSalespersonIds, selectedTab, selectedValue]);
+
+  // Group data by salesperson
+  const groupedData = useMemo(() => {
+    if (!analysisData || analysisData.length === 0) return {};
+
+    return analysisData.reduce((acc, curr) => {
+      if (!acc[curr.salesPersonId]) {
+        acc[curr.salesPersonId] = {
+          id: curr.salesPersonId,
+          name: curr.salesPersonName,
+          totalSales: 0,
+          totalOrders: 0,
+          totalContribution: 0,
+        };
+      }
+      acc[curr.salesPersonId].totalSales += curr.totalSales;
+      acc[curr.salesPersonId].totalOrders += curr.totalOrders;
+      acc[curr.salesPersonId].totalContribution += curr.percentOfTotal;
+      return acc;
+    }, {});
+  }, [analysisData]);
+
+  // Compare two salespersons
+  const handleCompare = () => {
+    // Toast when not selected salespersons
+    if (!selectedSalesperson1 || !selectedSalesperson2) {
+      showToast("Please select both salespersons to compare.", "info");
+      return;
+    }
+
+    // Prevent comparing the same salesperson
+    if (selectedSalesperson1 === selectedSalesperson2) {
+      showToast("Please select two different salespersons to compare.", "info");
+      return;
+    }
+
+    const sp1 = groupedData[selectedSalesperson1];
+    const sp2 = groupedData[selectedSalesperson2];
+
+    if (!sp1 || !sp2) return;
+
     setChartData({
-      labels: response.map((r) => r.name),
+      labels: [sp1.name, sp2.name],
       datasets: [
         {
           label: "Sales (PKR)",
-          data: response.map((r) => r.sales),
-          backgroundColor: "rgba(54, 162, 235, 0.6)",
+          data: [sp1.totalSales, sp2.totalSales],
+          backgroundColor: "rgba(0, 117, 149, 0.25)",
+          borderColor: "#00b8db",
+          borderWidth: 2,
           yAxisID: "y1",
         },
         {
           label: "Orders",
-          data: response.map((r) => r.orders),
-          backgroundColor: "rgba(255, 99, 132, 0.6)",
+          data: [sp1.totalOrders, sp2.totalOrders],
+          backgroundColor: "rgba(112, 8, 231, 0.5)",
+          borderColor: "#8e51ff",
+          borderWidth: 2,
           yAxisID: "y2",
         },
       ],
     });
   };
 
-  return (
-    <div className="space-y-6">
-      {/* Selection Row */}
-      <div className="flex flex-col md:flex-row gap-4 items-center">
-        <select
-          className="border p-2 rounded w-full md:w-1/3"
-          value={selectedSalesperson1}
-          onChange={(e) => setSelectedSalesperson1(e.target.value)}
-        >
-          <option value="">Select Salesperson 1</option>
-          {salespersons.map((sp) => (
-            <option key={sp.id} value={sp.id}>
-              {sp.name}
-            </option>
-          ))}
-        </select>
+  // ✅ Dropdown options restricted to selectedSalespersonIds only
+  const filteredSalespersons = salespersons.filter((sp) =>
+    selectedSalespersonIds.includes(sp.id)
+  );
 
-        <select
-          className="border p-2 rounded w-full md:w-1/3"
-          value={selectedSalesperson2}
-          onChange={(e) => setSelectedSalesperson2(e.target.value)}
-        >
-          <option value="">Select Salesperson 2</option>
-          {salespersons.map((sp) => (
-            <option key={sp.id} value={sp.id}>
-              {sp.name}
-            </option>
-          ))}
-        </select>
+  return isLoading == true ? (
+    <SpinnerLoader label="Loading analytics..." />
+  ) : (
+    <div className="space-y-6 min-h-full">
+      {/* Selection Row */}
+      <div className="flex flex-col md:flex-row gap-4 items-center justify-center">
+        {/* Salesperson 1 dropdown */}
+        <CustomDropdown
+          selectedValue={
+            filteredSalespersons.find((sp) => sp.id === selectedSalesperson1)
+              ?.username || "Select Salesperson 1"
+          }
+          onSelect={(value) => setSelectedSalesperson1(value)}
+          options={filteredSalespersons.map((sp) => ({
+            value: sp.id,
+            label: sp.username || sp.name,
+          }))}
+          placeholder="Select Salesperson 1"
+        />
+
+        {/* Salesperson 2 dropdown */}
+        <CustomDropdown
+          selectedValue={
+            filteredSalespersons.find((sp) => sp.id === selectedSalesperson2)
+              ?.username || "Select Salesperson 2"
+          }
+          onSelect={(value) => setSelectedSalesperson2(value)}
+          options={filteredSalespersons.map((sp) => ({
+            value: sp.id,
+            label: sp.username || sp.name,
+          }))}
+          placeholder="Select Salesperson 2"
+        />
 
         <button
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          className="bg-[#8a4fff] text-white px-4 py-2 rounded-lg hover:bg-[#7935e0] transition-colors"
           onClick={handleCompare}
         >
           Compare
@@ -74,29 +211,14 @@ const AnalyticsSalesperson = ({
       </div>
 
       {/* Chart Section */}
-      {chartData ? (
-        <GlobalChart
-          type="bar"
-          labels={chartData.labels}
-          datasets={chartData.datasets}
-          options={{
-            scales: {
-              y1: {
-                type: "linear",
-                position: "left",
-                title: { display: true, text: "Sales (PKR)" },
-              },
-              y2: {
-                type: "linear",
-                position: "right",
-                grid: { drawOnChartArea: false },
-                title: { display: true, text: "Orders" },
-              },
-            },
-          }}
-        />
-      ) : (
-        <p className="text-gray-500">Select two salespersons to compare.</p>
+      {chartData && (
+        <div className="grid grid-cols-1 gap-6">
+          <SalesComparisonChartCard
+            tab={selectedTab}
+            value={selectedValue}
+            chartData={chartData}
+          />
+        </div>
       )}
     </div>
   );

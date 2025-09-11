@@ -33,6 +33,9 @@ const Analytics = () => {
 
         const today = new Date();
         const referenceDate = format(today, "yyyy-MM-dd");
+        // Converting todays date to week format for later fetch
+        const weekValue = format(today, "yyyy-'W'II");
+        setSelectedValue(weekValue);
 
         const data = await analyticsService.GetSalesAnalysis(
           initialIds,
@@ -54,7 +57,7 @@ const Analytics = () => {
   return isLoading == true ? (
     <SpinnerLoader label="Loading analytics..." />
   ) : (
-    <div className="flex flex-col min-h-full">
+    <div className="flex flex-col min-h-[84.6vh]">
       <div className="flex-1">
         {/* Tabs only control state */}
         <AnalyticsTabs activeTab={activeTab} onTabChange={setActiveTab} />
@@ -85,14 +88,11 @@ const Analytics = () => {
         {activeTab === "salespersons" && (
           <AnalyticsSalesperson
             selectedTab={selectedTab}
-            // setSelectedTab={setSelectedTab}
             selectedValue={selectedValue}
-            // setSelectedValue={setSelectedValue}
-            // salespersons={salespersons}
-            selectedSalesIds={selectedSalespersonIds}
-            setSelectedSalespersonIds={setSelectedSalespersonIds}
             salespersons={salespersons}
-            setSalespersons={setSalespersons}
+            selectedSalespersonIds={selectedSalespersonIds}
+            analysisData={analysisData}
+            setAnalysisData={setAnalysisData}
           />
         )}
         {activeTab === "products" && (

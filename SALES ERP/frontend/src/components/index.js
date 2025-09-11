@@ -23,6 +23,7 @@ export { default as SalesPersonChartCard } from "./Charts/SalesPersonChartCard";
 export { default as ProductSalesChartCard } from "./Charts/ProductSalesChartCard";
 export { default as MonthlySalesChartCard } from "./Charts/MonthlySalesChartCard";
 export { default as SalesAnalyticsChartCard } from "./Charts/SalesAnalyticsChartCard";
+export { default as SalesComparisonChartCard } from "./Charts/SalesComparisonChartCard";
 
 export { default as DateTabs } from "./Tabs/DateTabs";
 export { default as AnalyticsTabs } from "./Tabs/AnalyticsTabs";

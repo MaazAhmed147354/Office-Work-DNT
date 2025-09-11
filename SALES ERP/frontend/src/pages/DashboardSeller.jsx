@@ -72,9 +72,12 @@ const Dashboard = () => {
             },
           ]);
         }
+
+        showToast("Dashboard data fetched", "success");
       } catch (err) {
         console.error("Error loading dashboard data:", err);
         setStatCardData([{}, {}, {}, {}]);
+        showToast("Failure fetching Dashboard Data!", "error");
       } finally {
         setLoading(false); // ✅ Hide loader when all requests complete
       }

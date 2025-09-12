@@ -87,9 +87,17 @@ const AnalyticsSalesperson = ({
           rangeType,
           referenceDate
         );
-        setAnalysisData(data);
 
-        showToast("Sales Analytics data fetched", "success");
+        if (!data || data.length === 0) {
+          setAnalysisData([]);
+          showToast(
+            "No sales data available for the selected period.",
+            "warning"
+          );
+        } else {
+          setAnalysisData(data);
+          showToast("Sales Analytics data fetched", "success");
+        }
       } catch (err) {
         setError("Failed to load analytics data.");
         console.error(err);

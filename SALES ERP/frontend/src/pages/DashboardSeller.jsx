@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useToast } from "../context/ToastContext";
 import {
   ProductSalesChartCard,
   MonthlySalesChartCard,
@@ -15,6 +16,8 @@ const Dashboard = () => {
   const [salesByMonth, setSalesByMonth] = useState([]);
   const [statCardData, setStatCardData] = useState([]);
   const [loading, setLoading] = useState(true); // ✅ Global Loader state
+
+  const { showToast } = useToast();
 
   useEffect(() => {
     const fetchData = async () => {

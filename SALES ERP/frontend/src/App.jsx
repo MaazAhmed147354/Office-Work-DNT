@@ -16,7 +16,7 @@ import "./App.css";
 
 function App() {
   return (
-    <div className="min-h-screen p-0 bg-[#1e1e2d] custom-scrollbar">
+    <div className="min-h-screen min-w-fit p-0 bg-[#1e1e2d] custom-scrollbar">
       <ToastProvider>
         <SidebarProvider>
           <BrowserRouter>

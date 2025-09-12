@@ -1,6 +1,6 @@
 const AnalyticsTabs = ({ activeTab, onTabChange }) => {
   const tabs = [
-    { id: "sales", label: "Sales Analysis", icon: "📊" },
+    { id: "sales", label: "Sales Analysis", icon: "📈" },
     { id: "salespersons", label: "Salesperson Comparison", icon: "👥" },
     { id: "products", label: "Product Analysis", icon: "📦" },
   ];

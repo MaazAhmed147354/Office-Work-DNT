@@ -67,14 +67,14 @@ const Accordion = ({ data }) => {
                 data={transformSalesToTableData(item.sales)}
                 keyField="period"
                 columns={[
-                  { header: "Period", field: "period", style: "text-left" },
+                  { header: "Period 🗓️", field: "period", style: "text-left" },
                   {
-                    header: "Total Sales",
+                    header: "Total Sales 💲",
                     field: "totalSales",
-                    style: "text-left",
+                    style: "text-left text-green-500",
                   },
                   {
-                    header: "Total Orders",
+                    header: "Total Orders 🗳️",
                     field: "totalOrders",
                     style: "text-center",
                   },

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { ChevronRight, ChevronLeft } from "lucide-react";
 import CustomDropdown from "../OtherComponents/CustomDropdown";
 
 const DateTabCard = ({
@@ -71,63 +72,73 @@ const DateTabCard = ({
   return (
     <div
       ref={wrapperRef}
-      className="bg-[#252538] p-4 rounded-xl border-none border-[#38384a]"
+      className="bg-[#252538] p-0 rounded-xl border-none border-[#38384a]"
     >
-      <div className="flex justify-center gap-6">
-        {["week", "month", "quarter", "year"].map((tab) => (
-          <div key={tab} className="flex items-center gap-3">
-            <button
-              onClick={() => handleTabClick(tab)}
-              className={`px-4 py-2 rounded-lg capitalize ${
-                selectedTab === tab
-                  ? "bg-[#8a4fff] text-white"
-                  : "bg-[#38384a] text-gray-300"
-              }`}
-            >
-              {tab}
-            </button>
+      <div className="flex gap-2">
+        {["week", "month", "quarter", "year"].map((tab) => {
+          const isActive = activeTab === tab && showPicker;
+          return (
+            <div key={tab} className="flex items-center gap-3">
+              <button
+                onClick={() => handleTabClick(tab)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg capitalize ${
+                  selectedTab === tab
+                    ? "bg-[#8a4fff] text-white"
+                    : "bg-[#38384a] text-gray-300"
+                }`}
+              >
+                {tab}
+                {isActive ? (
+                  <ChevronLeft size={16} />
+                ) : (
+                  <ChevronRight size={16} />
+                )}
+              </button>
 
-            {/* Picker rendered inline, adjusts other tabs */}
-            {showPicker && activeTab === tab && (
-              <>
-                {tab === "year" && (
-                  <CustomDropdown
-                    key="year-dropdown"
-                    onSelect={handleValueChange}
-                    selectedValue={selectedTab === "year" ? selectedValue : ""}
-                    options={yearsOptions}
-                    placeholder="Select Year"
-                  />
-                )}
-                {tab === "month" && (
-                  <input
-                    type="month"
-                    className="p-2 rounded bg-[#1e1e2f] text-gray-200"
-                    onChange={(e) => handleValueChange(e.target.value)}
-                  />
-                )}
-                {tab === "week" && (
-                  <input
-                    type="week"
-                    className="p-2 rounded bg-[#1e1e2f] text-gray-200"
-                    onChange={(e) => handleValueChange(e.target.value)}
-                  />
-                )}
-                {tab === "quarter" && (
-                  <CustomDropdown
-                    key="quarter-dropdown"
-                    onSelect={handleValueChange}
-                    selectedValue={
-                      selectedTab === "quarter" ? selectedValue : ""
-                    }
-                    options={quarterOptions}
-                    placeholder="Select Quarter"
-                  />
-                )}
-              </>
-            )}
-          </div>
-        ))}
+              {/* Picker rendered inline, adjusts other tabs */}
+              {showPicker && activeTab === tab && (
+                <>
+                  {tab === "year" && (
+                    <CustomDropdown
+                      key="year-dropdown"
+                      onSelect={handleValueChange}
+                      selectedValue={
+                        selectedTab === "year" ? selectedValue : ""
+                      }
+                      options={yearsOptions}
+                      placeholder="Select Year"
+                    />
+                  )}
+                  {tab === "month" && (
+                    <input
+                      type="month"
+                      className="p-2 rounded bg-[#1e1e2f] text-gray-200"
+                      onChange={(e) => handleValueChange(e.target.value)}
+                    />
+                  )}
+                  {tab === "week" && (
+                    <input
+                      type="week"
+                      className="p-2 rounded bg-[#1e1e2f] text-gray-200"
+                      onChange={(e) => handleValueChange(e.target.value)}
+                    />
+                  )}
+                  {tab === "quarter" && (
+                    <CustomDropdown
+                      key="quarter-dropdown"
+                      onSelect={handleValueChange}
+                      selectedValue={
+                        selectedTab === "quarter" ? selectedValue : ""
+                      }
+                      options={quarterOptions}
+                      placeholder="Select Quarter"
+                    />
+                  )}
+                </>
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import { useToast } from "../context/ToastContext";
 import {
   SpinnerLoader,
   CustomDropdown,
+  DownloadButton,
   SalesComparisonChartCard,
 } from "../components";
 import analyticsService from "../services/analyticsService";
@@ -23,6 +24,9 @@ const AnalyticsSalesperson = ({
   const [selectedSalesperson1, setSelectedSalesperson1] = useState("");
   const [selectedSalesperson2, setSelectedSalesperson2] = useState("");
   const [chartData, setChartData] = useState(null);
+
+  // create refs for charts
+  const comparisonChartRef = useRef(null);
 
   const { showToast } = useToast();
 
@@ -220,12 +224,22 @@ const AnalyticsSalesperson = ({
 
       {/* Chart Section */}
       {chartData && (
-        <div className="grid grid-cols-1 gap-6">
-          <SalesComparisonChartCard
-            tab={selectedTab}
-            value={selectedValue}
-            chartData={chartData}
-          />
+        <div className="space-y-4">
+          <div className="flex items-center justify-end">
+            <DownloadButton
+              type="pdf"
+              title={`Sales Comparison Report (${selectedTab}ly)`}
+              chartRefs={[comparisonChartRef]}
+            />
+          </div>
+          <div className="grid grid-cols-1 gap-6">
+            <SalesComparisonChartCard
+              ref={comparisonChartRef}
+              tab={selectedTab}
+              value={selectedValue}
+              chartData={chartData}
+            />
+          </div>
         </div>
       )}
     </div>

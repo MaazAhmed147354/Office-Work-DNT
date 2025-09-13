@@ -4,6 +4,7 @@ import { useToast } from "../context/ToastContext";
 import {
   SpinnerLoader,
   ViewToggle,
+  DownloadButton,
   SalesAnalyticsChartCard,
   Accordion,
   SalesContributionChartCard,
@@ -22,6 +23,10 @@ const AnalyticsSales = ({
   const [error, setError] = useState(null);
 
   const [viewMode, setViewMode] = useState("graphical");
+
+  // create refs for charts
+  const salesChartRef = useRef(null);
+  const contributionChartRef = useRef(null);
 
   const { showToast } = useToast();
 
@@ -174,21 +179,32 @@ const AnalyticsSales = ({
         <ViewToggle onToggle={setViewMode} viewMode={viewMode} />
 
         {viewMode === "graphical" ? (
-          /* Graphical Section */
-          <div className="grid grid-cols-2 grid-rows-2 md:grid-rows-1 gap-6">
-            <div className="col-span-2 lg:col-span-1">
-              <SalesAnalyticsChartCard
-                tab={selectedTab}
-                value={selectedValue}
-                data={chartData}
+          <div className="space-y-4">
+            <div className="flex items-center justify-end">
+              <DownloadButton
+                type="pdf"
+                title={`Sales Analysis Report (${selectedTab}ly)`}
+                chartRefs={[salesChartRef, contributionChartRef]}
               />
             </div>
-            <div className="col-span-2 lg:col-span-1">
-              <SalesContributionChartCard
-                tab={selectedTab}
-                value={selectedValue}
-                data={chartData}
-              />
+            {/* Graphical Section */}
+            <div className="grid grid-cols-2 grid-rows-2 md:grid-rows-1 gap-6">
+              <div className="col-span-2 lg:col-span-1">
+                <SalesAnalyticsChartCard
+                  ref={salesChartRef}
+                  tab={selectedTab}
+                  value={selectedValue}
+                  data={chartData}
+                />
+              </div>
+              <div className="col-span-2 lg:col-span-1">
+                <SalesContributionChartCard
+                  ref={contributionChartRef}
+                  tab={selectedTab}
+                  value={selectedValue}
+                  data={chartData}
+                />
+              </div>
             </div>
           </div>
         ) : (

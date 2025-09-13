@@ -1,13 +1,7 @@
 import GlobalChart from "./GlobalChart";
+import { forwardRef } from "react";
 
-const SalesAnalyticsChartCard = ({ tab, value, data }) => {
-  //   if (!data || data.length === 0) {
-  //     return (
-  //       <div className="bg-[#252538] rounded-xl p-6 border border-[#38384a] text-gray-400 text-sm">
-  //         No sales data available
-  //       </div>
-  //     );
-  //   }
+const SalesAnalyticsChartCard = forwardRef(({ tab, value, data }, ref) => {
   const labels = data.map((item) => item.label);
   const sales = data.map((item) => item.totalSales);
 
@@ -31,7 +25,10 @@ const SalesAnalyticsChartCard = ({ tab, value, data }) => {
   };
 
   return (
-    <div className="bg-[#252538] rounded-xl p-6 border border-[#38384a] hover:border-[#8a4fff]/50 transition-colors duration-300">
+    <div
+      ref={ref}
+      className="bg-[#252538] rounded-xl p-6 border border-[#38384a] hover:border-[#8a4fff]/50 transition-colors duration-300"
+    >
       <h3 className="text-sm font-medium text-[#BEB7DF] mb-4">
         Sales Analytics ({tab?.toUpperCase()} - {value || "All"})
       </h3>
@@ -42,6 +39,6 @@ const SalesAnalyticsChartCard = ({ tab, value, data }) => {
       />
     </div>
   );
-};
+});
 
 export default SalesAnalyticsChartCard;

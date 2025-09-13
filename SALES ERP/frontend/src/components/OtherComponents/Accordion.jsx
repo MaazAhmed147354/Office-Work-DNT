@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import DownloadButton from "./DownloadButton";
-import GlobalMarqueeTable from "../Tables/GlobalMarqueeTable";
 import GlobalPaginationTable from "../Tables/GlobalPaginationTable";
 
 const Accordion = ({ data }) => {
@@ -51,7 +50,7 @@ const Accordion = ({ data }) => {
           </button>
 
           {openIndex === index && (
-            <div className="p-4 space-y-4">
+            <div className="px-4 py-2 space-y-4">
               {/* Download Button */}
               <div className="flex items-center justify-end">
                 <DownloadButton

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import DownloadButton from "./DownloadButton";
 import GlobalMarqueeTable from "../Tables/GlobalMarqueeTable";
 import GlobalPaginationTable from "../Tables/GlobalPaginationTable";
 
@@ -50,18 +51,24 @@ const Accordion = ({ data }) => {
           </button>
 
           {openIndex === index && (
-            <div className="p-4">
-              {/* <GlobalMarqueeTable
-                title="Sales Performance Over Time"
-                data={transformSalesToTableData(item.sales)}
-                keyField="period"
-                columns={[
-                  { header: "Period", field: "period", style: "text-left" },
-                  { header: "Total Sales", field: "totalSales", style: "text-left" },
-                  { header: "Total Orders", field: "totalOrders", style: "text-center" },
-                  { header: "% of Total", field: "percentOfTotal", style: "text-center" },
-                ]}
-              /> */}
+            <div className="p-4 space-y-4">
+              {/* Download Button */}
+              <div className="flex items-center justify-end">
+                <DownloadButton
+                  type="excel"
+                  title={`Sales Performance - SyedZakir`}
+                  data={transformSalesToTableData(item.sales)}
+                  columns={[
+                    { header: "Period 🗓️", field: "period" },
+                    { header: "Total Sales 💲", field: "totalSales" },
+                    { header: "Total Orders 🗳️", field: "totalOrders" },
+                    {
+                      header: "Contribution in Total Sales",
+                      field: "percentOfTotal",
+                    },
+                  ]}
+                />
+              </div>
               <GlobalPaginationTable
                 title="Sales Performance Over Time"
                 data={transformSalesToTableData(item.sales)}

@@ -39,4 +39,5 @@ export { default as SpinnerLoader } from "./Loaders/SpinnerLoader";
 export { default as Toast } from "./OtherComponents/Toast";
 export { default as ViewToggle } from "./OtherComponents/ViewToggle";
 export { default as Accordion } from "./OtherComponents/Accordion";
+export { default as DownloadButton } from "./OtherComponents/DownloadButton";
 export { default as CustomDropdown } from "./OtherComponents/CustomDropdown";

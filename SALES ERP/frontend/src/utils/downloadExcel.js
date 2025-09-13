@@ -21,16 +21,15 @@ export const downloadExcelWithTable = async (
 
   // Add Logo (top-left)
   try {
-    const response = await fetch("/dnt.png"); // put your logo inside public/logo.png
-    // const response = await fetch("/dreamslogo.png"); // put your logo inside public/logo.png
+    const response = await fetch("/dreams.jpg"); // put your logo inside public/logo.png
     const logoBuffer = await response.arrayBuffer();
     const logo = workbook.addImage({
       buffer: logoBuffer,
-      extension: "png",
+      extension: "jpg",
     });
     worksheet.addImage(logo, {
       tl: { col: 0, row: 0 },
-      ext: { width: 100, height: 100 },
+      ext: { width: 115, height: 100 },
     });
   } catch (err) {
     console.warn("Logo not found, skipping...");
@@ -40,7 +39,7 @@ export const downloadExcelWithTable = async (
   worksheet.mergeCells("A1:D1");
   const orgCell = worksheet.getCell("A1");
   orgCell.value = "Dreams Network";
-  orgCell.font = { size: 18, bold: true, color: { argb: "6D28D9" } };
+  orgCell.font = { size: 18, bold: true, color: { argb: "2563EB" } };
   orgCell.alignment = { vertical: "middle", horizontal: "center" };
 
   // Sales Breakdown
@@ -110,7 +109,7 @@ export const downloadExcelWithTable = async (
       cell.fill = {
         type: "pattern",
         pattern: "solid",
-        fgColor: { argb: "C1EDC7" }, // light green
+        fgColor: { argb: "FFD6E7FA" }, // lighter sky blue
       };
       cell.border = {
         top: { style: "thin" },
@@ -125,6 +124,70 @@ export const downloadExcelWithTable = async (
       }
     });
   });
+
+  // ✅ Calculate totals directly from data
+  const totalSales = data.reduce(
+    (sum, r) => sum + (parseFloat(r.totalSales) || 0),
+    0
+  );
+  const totalOrders = data.reduce(
+    (sum, r) => sum + (parseFloat(r.totalOrders) || 0),
+    0
+  );
+  const totalContribution = data.reduce(
+    (sum, r) => sum + parseFloat(r.percentOfTotal.replace("%", "") || 0),
+    0
+  );
+
+  // Totals Data Row
+  const totalsRow = worksheet.addRow([
+    "TOTAL", // label under "Period"
+    totalSales,
+    totalOrders,
+    `${totalContribution.toFixed(2)}%`,
+  ]);
+
+  totalsRow.font = { bold: true, color: { argb: "FFFFFFFF" } };
+  totalsRow.alignment = { horizontal: "center", vertical: "middle" };
+  totalsRow.eachCell((cell) => {
+    cell.fill = {
+      type: "pattern",
+      pattern: "solid",
+      fgColor: { argb: "FF4B7CDE" }, // darker blue for totals
+    };
+    cell.border = {
+      top: { style: "thin" },
+      left: { style: "thin" },
+      bottom: { style: "thin" },
+      right: { style: "thin" },
+    };
+  });
+
+  // Leave one empty row after table
+  worksheet.addRow([]);
+
+  // ✅ Add footer row (system generated note)
+  const footerRow = worksheet.addRow([
+    `Generated on ${new Date().toLocaleString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    })}\nThis is a system generated report`,
+  ]);
+
+  // Merge footer row across all columns
+  worksheet.mergeCells(footerRow.number, 1, footerRow.number, columns.length);
+
+  const footerCell = footerRow.getCell(1);
+  footerCell.font = { italic: true, size: 11, color: { argb: "FF666666" } };
+  footerCell.alignment = {
+    horizontal: "center",
+    vertical: "middle",
+    wrapText: true, // ✅ enables line breaks
+  };
+  footerRow.height = 40;
 
   // Auto column widths
   worksheet.columns.forEach((col, i) => {

@@ -56,11 +56,11 @@ const Accordion = ({ data }) => {
               <div className="flex items-center justify-end">
                 <DownloadButton
                   type="excel"
-                  title={`Sales Performance - SyedZakir`}
+                  title={`Sales Performance - ${item.salesperson.toUpperCase()}`}
                   data={transformSalesToTableData(item.sales)}
                   columns={[
                     { header: "Period 🗓️", field: "period" },
-                    { header: "Total Sales 💲", field: "totalSales" },
+                    { header: "Total Sales 💵", field: "totalSales" },
                     { header: "Total Orders 🗳️", field: "totalOrders" },
                     {
                       header: "Contribution in Total Sales",

@@ -173,7 +173,9 @@ export const downloadExcelWithTable = async (
       month: "short",
       year: "numeric",
       hour: "2-digit",
+      hour12: true,
       minute: "2-digit",
+      second: "2-digit",
     })}\nThis is a system generated report`,
   ]);
 

@@ -7,15 +7,28 @@ import { downloadExcelWithTable } from "../../utils/downloadExcel";
  * @param {string} type - "pdf" | "excel"
  * @param {string} title - Report title
  * @param {Array} columns - Table columns (for Excel)
- * @param {Array} data - Table data (for Excel)
+ * @param {Array} data - Table data (for Excel, single table)
+ * @param {Array} multiData - Array of { title, rows } (for Excel, multiple tables)
  * @param {Array} chartRefs - Chart refs (for PDF)
  */
-const DownloadButton = ({ type, title, columns, data, chartRefs }) => {
+const DownloadButton = ({
+  type,
+  title,
+  columns,
+  data,
+  multiData,
+  chartRefs,
+}) => {
   const handleDownload = async () => {
     if (type === "pdf") {
       await downloadPdfWithCharts(title, chartRefs, `${title}.pdf`);
     } else if (type === "excel") {
-      downloadExcelWithTable(title, columns, data, `${title}.xlsx`);
+      downloadExcelWithTable(
+        title,
+        columns,
+        multiData || data,
+        `${title}.xlsx`
+      );
     }
   };
 

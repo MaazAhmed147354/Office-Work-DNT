@@ -1,4 +1,5 @@
 import { useState } from "react";
+import CustomDropdown from "../OtherComponents/CustomDropdown";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const branchOptions = [
@@ -15,6 +16,17 @@ const ProductsTable = ({ title, data, columns, className = "" }) => {
   const [selectedBranch, setSelectedBranch] = useState("all"); // branch filter
   const rowsPerPage = 10;
   const pagesPerGroup = 15;
+
+  // ✅ Transform options for CustomDropdown
+  const dropdownOptions = branchOptions.map((b) => ({
+    value: b.id,
+    label: b.name,
+  }));
+
+  // ✅ Find label of current branch
+  const selectedBranchLabel =
+    dropdownOptions.find((opt) => String(opt.value) === String(selectedBranch))
+      ?.label || "Select Branch";
 
   // Apply branch filter
   const filteredData =
@@ -50,22 +62,16 @@ const ProductsTable = ({ title, data, columns, className = "" }) => {
         <h3 className="text-lg font-semibold text-[#BEB7DF]">{title}</h3>
 
         {/* Branch Filter */}
-        <select
-          value={selectedBranch}
-          onChange={(e) => {
-            setSelectedBranch(e.target.value);
-            setCurrentPage(1); // reset pagination on filter change
+        <CustomDropdown
+          selectedValue={selectedBranchLabel}
+          onSelect={(value) => {
+            setSelectedBranch(value);
+            setCurrentPage(1);
             setPageGroup(0);
           }}
-          className="ml-4 px-3 py-2 bg-[#2d2d42] text-[#BEB7DF] rounded-md border border-[#38384a] focus:outline-none focus:ring-2 focus:ring-[#8a4fff]"
-        >
-          <option value="all">All Branches</option>
-          {branchOptions.map((branch) => (
-            <option key={branch.id} value={branch.id}>
-              {branch.name}
-            </option>
-          ))}
-        </select>
+          options={dropdownOptions}
+          placeholder="Select Branch"
+        />
       </div>
 
       {/* Table + Pagination inside same scroll container */}

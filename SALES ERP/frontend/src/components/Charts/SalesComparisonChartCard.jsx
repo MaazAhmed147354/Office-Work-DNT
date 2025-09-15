@@ -1,9 +1,36 @@
+import { useMemo, forwardRef } from "react";
 import GlobalChart from "./GlobalChart";
-import { forwardRef } from "react";
 import { barChartBaseConfig } from "../../data/chartConfig";
 
 const SalesComparisonChartCard = forwardRef(
   ({ tab, value, chartData }, ref) => {
+    // ✅ Memoized chart options
+    const chartOptions = useMemo(
+      () => ({
+        ...barChartBaseConfig.options,
+        scales: {
+          ...barChartBaseConfig.options.scales,
+          y: { display: false },
+          y1: {
+            type: "linear",
+            position: "left",
+            title: { display: true, text: "Sales (PKR)", color: "#BEB7DF" },
+            ticks: { color: "#b0b0b0" },
+            grid: { color: "#38384a" },
+          },
+          y2: {
+            type: "linear",
+            position: "right",
+            title: { display: true, text: "Orders", color: "#BEB7DF" },
+            ticks: { color: "#b0b0b0" },
+            grid: { drawOnChartArea: false },
+            alignTo: "y1",
+          },
+        },
+      }),
+      []
+    );
+
     return (
       <div
         ref={ref}
@@ -17,28 +44,7 @@ const SalesComparisonChartCard = forwardRef(
           type="bar"
           labels={chartData.labels}
           datasets={chartData.datasets}
-          options={{
-            ...barChartBaseConfig.options,
-            scales: {
-              ...barChartBaseConfig.options.scales,
-              y: { display: false },
-              y1: {
-                type: "linear",
-                position: "left",
-                title: { display: true, text: "Sales (PKR)", color: "#BEB7DF" },
-                ticks: { color: "#b0b0b0" },
-                grid: { color: "#38384a" },
-              },
-              y2: {
-                type: "linear",
-                position: "right",
-                title: { display: true, text: "Orders", color: "#BEB7DF" },
-                ticks: { color: "#b0b0b0" },
-                grid: { drawOnChartArea: false },
-                alignTo: "y1",
-              },
-            },
-          }}
+          options={chartOptions}
         />
       </div>
     );

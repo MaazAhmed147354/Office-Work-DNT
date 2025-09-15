@@ -1,28 +1,76 @@
+import { useMemo, useCallback, forwardRef } from "react";
 import GlobalChart from "./GlobalChart";
-import { forwardRef } from "react";
+import { barChartBaseConfig } from "../../data/chartConfig";
 
 const SalesAnalyticsChartCard = forwardRef(({ tab, value, data }, ref) => {
-  const labels = data.map((item) => item.label);
-  const sales = data.map((item) => item.totalSales);
+  // ✅ Memoized labels & sales
+  const labels = useMemo(() => data.map((item) => item.label), [data]);
+  const sales = useMemo(() => data.map((item) => item.totalSales), [data]);
 
-  const chartData = {
-    labels,
-    datasets: [
-      {
-        label: `Sales (${tab} - ${value || "All"})`,
-        data: sales,
-        backgroundColor: [
-          "rgb(173, 70, 255, 0.25)",
-          "rgb(0, 117, 149, 0.25)",
-          "rgb(112, 8, 231, 0.25)",
-          "rgb(0, 132, 209, 0.25)",
-        ],
-        borderColor: ["#c27aff", "#00b8db", "#8e51ff", "#0084d1"],
-        borderWidth: 2,
-        borderRadius: 5,
+  // ✅ Memoized chart data
+  const chartData = useMemo(
+    () => ({
+      labels,
+      datasets: [
+        {
+          label: `Sales (${tab} - ${value || "All"})`,
+          data: sales,
+          backgroundColor: [
+            "rgba(173, 70, 255, 0.25)",
+            "rgba(0, 117, 149, 0.25)",
+            "rgba(112, 8, 231, 0.25)",
+            "rgba(0, 132, 209, 0.25)",
+          ],
+          borderColor: ["#c27aff", "#00b8db", "#8e51ff", "#0084d1"],
+          borderWidth: 2,
+          borderRadius: 5,
+        },
+      ],
+    }),
+    [labels, sales, tab, value]
+  );
+
+  // ✅ Memoized tooltip
+  const tooltipLabel = useCallback(
+    (context) => `${context.raw.toLocaleString()} PKR`,
+    []
+  );
+
+  // ✅ Memoized chart options
+  const chartOptions = useMemo(
+    () => ({
+      ...barChartBaseConfig.options,
+      plugins: {
+        ...barChartBaseConfig.options.plugins,
+        legend: { display: false },
+        tooltip: {
+          ...barChartBaseConfig.options.plugins.tooltip,
+          callbacks: { label: tooltipLabel },
+        },
       },
-    ],
-  };
+      scales: {
+        ...barChartBaseConfig.options.scales,
+        x: {
+          ...barChartBaseConfig.options.scales.x,
+          ticks: { color: "#b0b0b0" },
+        },
+        y: {
+          ...barChartBaseConfig.options.scales.y,
+          ticks: {
+            color: "#b0b0b0",
+            callback: function (value) {
+              return value >= 1_000_000
+                ? value / 1_000_000 + "M"
+                : value >= 1_000
+                ? value / 1_000 + "K"
+                : value;
+            },
+          },
+        },
+      },
+    }),
+    [tooltipLabel]
+  );
 
   return (
     <div
@@ -36,6 +84,7 @@ const SalesAnalyticsChartCard = forwardRef(({ tab, value, data }, ref) => {
         type="bar"
         labels={chartData.labels}
         datasets={chartData.datasets}
+        options={chartOptions}
       />
     </div>
   );

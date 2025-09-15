@@ -117,15 +117,9 @@ const Dashboard = () => {
         {/* Graphs Section */}
         <div className="grid grid-cols-2 md:grid-cols-2 gap-6 mb-6">
           <div className="grid col-span-2 md:grid-cols-2 gap-6">
-            <ProductSalesChartCard data={salesByProduct.slice(0, 10)} />
+            <ProductSalesChartCard data={salesByProduct} />
             <MonthlySalesChartCard data={salesByMonth} />
-            {/* <ProgressChartCard /> */}
           </div>
-          {/* <div className="grid col-span-2 md:grid-cols-2 gap-6"> */}
-          {/* <PolarAreaChartCard /> */}
-          {/* <SalesPersonChartCard data={salesBySalesperson} /> */}
-          {/* <RadarChartCard /> */}
-          {/* </div> */}
         </div>
 
         {/* Table Section */}

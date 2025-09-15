@@ -68,7 +68,6 @@ const Dashboard = () => {
               classname: "bg-sky-600",
             },
           ]);
-
         }
         showToast("Dashboard data fetched", "success");
       } catch (err) {
@@ -110,7 +109,7 @@ const Dashboard = () => {
             <MonthlySalesChartCard data={salesByMonth} />
           </div>
           <div className="grid col-span-2 md:grid-cols-2 gap-6">
-            <ProductSalesChartCard data={salesByProduct.slice(0, 10)} />
+            <ProductSalesChartCard data={salesByProduct} />
             <SalesPersonChartCard data={salesBySalesperson} />
           </div>
         </div>

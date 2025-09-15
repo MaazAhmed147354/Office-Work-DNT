@@ -5,6 +5,7 @@ const CustomDropdown = ({
   selectedValue,
   options,
   placeholder = "Select",
+  customWidth = "min-w-[120px]",
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -28,7 +29,7 @@ const CustomDropdown = ({
     <div ref={dropdownRef} className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="p-2 rounded bg-[#1e1e2f] text-gray-200 w-full text-left min-w-[120px] flex items-center justify-between"
+        className={`p-2 rounded bg-[#1e1e2f] text-gray-200 w-full text-left ${customWidth} flex items-center justify-between`}
       >
         <span className="flex-1">{selectedValue || placeholder}</span>
         <span className="ml-2 transform transition-transform">

@@ -107,6 +107,7 @@ const DateTabCard = ({
                       }
                       options={yearsOptions}
                       placeholder="Select Year"
+                      customWidth="min-w-[120px]"
                     />
                   )}
                   {tab === "month" && (

@@ -71,6 +71,7 @@ const ProductsTable = ({ title, data, columns, className = "" }) => {
           }}
           options={dropdownOptions}
           placeholder="Select Branch"
+          customWidth="min-w-[180px]"
         />
       </div>
 

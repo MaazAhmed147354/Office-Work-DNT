@@ -40,7 +40,7 @@ export const downloadPdfWithCharts = async (
   }
 
   // ✅ Add Heading
-  doc.setFont("helvetica", "bold");
+  doc.setFont("times", "bold");
   doc.setFontSize(18);
   doc.text("DREAMS NETWORK", pageWidth / 2, yPos + 20, { align: "center" });
   doc.setFontSize(14);

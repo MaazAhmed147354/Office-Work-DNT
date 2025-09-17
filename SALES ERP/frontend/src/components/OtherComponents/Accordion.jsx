@@ -54,6 +54,7 @@ const Accordion = ({ data }) => {
       <div className="flex justify-end">
         <DownloadButton
           type="excel"
+          buttonText="Download All"
           title="All Salespersons Performance"
           multiData={allTablesData} // new prop
           columns={columns}
@@ -87,6 +88,7 @@ const Accordion = ({ data }) => {
                 <div className="flex items-center justify-end">
                   <DownloadButton
                     type="excel"
+                    buttonText="Download Excel"
                     title={`Sales Performance - ${sp.salesperson.toUpperCase()}`}
                     data={sp.rows}
                     columns={columns}

@@ -211,6 +211,7 @@ const AnalyticsSalesComparison = ({
           <div className="flex items-center justify-end">
             <DownloadButton
               type="pdf"
+              buttonText="Download PDF"
               title={`Sales Comparison Report (${selectedTab}ly)`}
               chartRefs={[comparisonChartRef]}
             />

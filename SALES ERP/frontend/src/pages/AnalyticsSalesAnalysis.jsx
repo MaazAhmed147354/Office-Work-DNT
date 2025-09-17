@@ -195,6 +195,7 @@ const AnalyticsSalesAnalysis = ({
             <div className="flex items-center justify-end">
               <DownloadButton
                 type="pdf"
+                buttonText="Download PDF"
                 title={`Sales Analysis Report (${selectedTab}ly)`}
                 chartRefs={[salesChartRef, contributionChartRef]}
               />

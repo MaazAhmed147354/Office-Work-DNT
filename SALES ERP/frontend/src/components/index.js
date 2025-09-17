@@ -27,7 +27,6 @@ export { default as SalesComparisonChartCard } from "./Charts/SalesComparisonCha
 
 export { default as DateTabs } from "./Tabs/DateTabs";
 export { default as CustomTabs } from "./Tabs/CustomTabs";
-export { default as AnalyticsTabs } from "./Tabs/AnalyticsTabs";
 
 export { default as DateModal } from "./Modals/DateModal";
 export { default as LogoutModal } from "./Modals/LogoutModal";

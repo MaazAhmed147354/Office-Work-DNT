@@ -34,6 +34,35 @@ class AnalyticsService {
     }
   }
 
+  async GetProductsAnalysis(brandIds, rangeType, referenceDate) {
+    try {
+      const token = localStorage.getItem("token");
+      const roleid = localStorage.getItem("roleid");
+      if (!token) return false;
+
+      const res = await axios.post(
+        `${BASE_API_URL}/Product/GetSalesAnalysisPerProduct`,
+        {
+          roleId: roleid,
+          brandIds: brandIds,
+          rangeType: rangeType,
+          referenceDate: referenceDate,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(res.data);
+
+      return res.data;
+    } catch (err) {
+      console.error("Error fetching Products Analytics data:", err);
+      throw err;
+    }
+  }
+
   async getSalespersonList() {
     try {
       const token = localStorage.getItem("token");

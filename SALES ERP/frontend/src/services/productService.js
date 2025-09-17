@@ -16,8 +16,8 @@ class ProductService {
         },
       });
 
-      console.log(res.data); // Full response from API
-      return res.data; // This will be your ProductsList
+      console.log(res.data);
+      return res.data;
     } catch (err) {
       console.error("Error fetching products list:", err);
       throw err;

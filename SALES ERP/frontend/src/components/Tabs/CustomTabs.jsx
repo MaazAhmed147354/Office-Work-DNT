@@ -1,10 +1,4 @@
-const AnalyticsTabs = ({ activeTab, onTabChange }) => {
-  const tabs = [
-    { id: "sales", label: "Sales Analysis", icon: "📈" },
-    { id: "salespersons", label: "Salesperson Comparison", icon: "👥" },
-    { id: "products", label: "Product Analysis", icon: "📦" },
-  ];
-
+const CustomTabs = ({ tabs, activeTab, onTabChange }) => {
   return (
     <div className="rounded-xl p-0 mb-4">
       <div className="flex space-x-1">
@@ -12,14 +6,15 @@ const AnalyticsTabs = ({ activeTab, onTabChange }) => {
           <button
             key={tab.id}
             onClick={() => onTabChange(tab.id)}
-            className={`relative px-4 py-2 flex items-center gap-2 transition-colors${
+            className={`relative px-4 py-2 flex items-center gap-2 transition-colors ${
               activeTab === tab.id
-                ? " text-white"
+                ? "text-white"
                 : "text-gray-300 hover:text-white"
             }`}
           >
             {/* Icon always visible */}
-            <span>{tab.icon}</span>
+            {tab.icon && <span>{tab.icon}</span>}
+
             {/* Label hidden on small screens, visible on md+ */}
             <span className="hidden lg:inline">{tab.label}</span>
 
@@ -36,4 +31,4 @@ const AnalyticsTabs = ({ activeTab, onTabChange }) => {
   );
 };
 
-export default AnalyticsTabs;
+export default CustomTabs;

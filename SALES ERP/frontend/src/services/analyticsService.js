@@ -65,11 +65,14 @@ class AnalyticsService {
       const token = localStorage.getItem("token");
       if (!token) return false;
 
-      const res = await axios.get(`${BASE_API_URL}/Product/GetProductsList`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.get(
+        `${BASE_API_URL}/Product/GetProductsByBrand`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       console.log(res.data);
 
       return res.data;

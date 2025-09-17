@@ -25,7 +25,7 @@ class AnalyticsService {
           },
         }
       );
-      console.log("In Service file:", res.data);
+      console.log(res.data);
 
       return res.data;
     } catch (err) {
@@ -55,7 +55,26 @@ class AnalyticsService {
 
       return res.data;
     } catch (err) {
-      console.error("Error fetching sales data:", err);
+      console.error("Error fetching salesperson list:", err);
+      throw err;
+    }
+  }
+
+  async getProductsList() {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return false;
+
+      const res = await axios.get(`${BASE_API_URL}/Product/GetProductsList`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(res.data);
+
+      return res.data;
+    } catch (err) {
+      console.error("Error fetching products list:", err);
       throw err;
     }
   }

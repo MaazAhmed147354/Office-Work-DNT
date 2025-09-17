@@ -1,217 +1,106 @@
-import { format, startOfWeek, addWeeks } from "date-fns";
-import { useState, useEffect, useMemo, useRef } from "react";
+import { format } from "date-fns";
+import { useState, useEffect } from "react";
 import { useToast } from "../context/ToastContext";
-import {
-  SpinnerLoader,
-  ViewToggle,
-  DownloadButton,
-  SalesAnalyticsChartCard,
-  Accordion,
-  SalesContributionChartCard,
-} from "../components";
+import { SpinnerLoader, CustomTabs, FilterDataCard } from "../components";
+import AnalyticsSalesAnalysis from "./AnalyticsSalesAnalysis";
+import AnalyticsSalesComparison from "./AnalyticsSalesComparison";
 import analyticsService from "../services/analyticsService";
 
-const AnalyticsSales = ({
-  selectedTab,
-  selectedValue,
-  selectedSalespersonIds,
-  analysisData,
-  setAnalysisData,
-}) => {
-  // State for page load
+const AnalyticsSales = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  const [viewMode, setViewMode] = useState("graphical");
-
-  // create refs for charts
-  const salesChartRef = useRef(null);
-  const contributionChartRef = useRef(null);
+  const [activeTab, setActiveTab] = useState("analysis");
+  // ✅ Shared filter states
+  const [selectedTab, setSelectedTab] = useState("week");
+  const [selectedValue, setSelectedValue] = useState(null);
+  const [salespersons, setSalespersons] = useState([]);
+  const [selectedSalespersonIds, setSelectedSalespersonIds] = useState([]);
+  const [analysisData, setAnalysisData] = useState([]);
 
   const { showToast } = useToast();
 
-  const didMount = useRef(false);
-
-  // Fetch analytics data when filters change
   useEffect(() => {
-    // Skip first load - handled in parent
-    if (!didMount.current) {
-      didMount.current = true;
-      return;
-    }
-
-    const fetchAnalyticsData = async () => {
-      // Don't fetch if no salespersons selected or filters are incomplete
-      if (
-        selectedSalespersonIds.length === 0 ||
-        !selectedTab ||
-        !selectedValue
-      ) {
-        setAnalysisData([]);
-        showToast("Child: Please select all filters", "warning");
-        return;
-      }
-
+    // Fetch salespersons list and initial data
+    const fetchInitialData = async () => {
       try {
         setIsLoading(true);
-        setError(null);
 
-        // Map UI tab values to API rangeType
-        const rangeTypeMap = {
-          year: "yearly",
-          month: "monthly",
-          week: "weekly",
-          quarter: "quarterly",
-        };
-        const rangeType = rangeTypeMap[selectedTab];
+        const list = await analyticsService.getSalespersonList();
+        setSalespersons(list);
 
-        // Format referenceDate based on selectedTab and selectedValue
-        let referenceDate;
-        if (selectedTab === "year") {
-          referenceDate = `${selectedValue}-01-01`; // YYYY-01-01
-        } else if (selectedTab === "month") {
-          referenceDate = `${selectedValue}-01`; // YYYY-MM-01
-        } else if (selectedTab === "week") {
-          console.log("Week Date ", selectedValue);
-          // Using date-fns library
-          const year = selectedValue.substring(0, 4);
-          const weekNum = parseInt(selectedValue.substring(6));
-          // Create date for first week of the year
-          const firstWeek = startOfWeek(new Date(parseInt(year), 0, 1));
-          const targetDate = addWeeks(firstWeek, weekNum - 1);
-          referenceDate = format(targetDate, "yyyy-MM-dd");
-        } else if (selectedTab === "quarter") {
-          // Mapping to first date of selected quarter
-          const quarterMap = { Q1: "01", Q2: "04", Q3: "07", Q4: "10" };
-          const year = new Date().getFullYear(); // You might need to get year from somewhere
-          referenceDate = `${year}-${quarterMap[selectedValue]}-01`;
-        }
+        const initialIds = list.map((sp) => sp.id);
+        setSelectedSalespersonIds(initialIds);
+
+        const today = new Date();
+        const referenceDate = format(today, "yyyy-MM-dd");
+        // Converting todays date to week format for later fetch
+        const weekValue = format(today, "yyyy-'W'II");
+        setSelectedValue(weekValue);
 
         const data = await analyticsService.GetSalesAnalysis(
-          selectedSalespersonIds,
-          rangeType,
+          initialIds,
+          "weekly",
           referenceDate
         );
+        setAnalysisData(data);
 
-        if (!data || data.length === 0) {
-          setAnalysisData([]);
-          showToast(
-            "No sales data available for the selected period.",
-            "warning"
-          );
-        } else {
-          setAnalysisData(data);
-          showToast("Sales Analytics data fetched", "success");
-        }
+        showToast("Sales Analytics data fetched", "success");
       } catch (err) {
-        setError("Failed to load analytics data.");
-        console.error(err);
+        console.error("Failed to load salespersons list:", err);
       } finally {
         setIsLoading(false);
       }
     };
-
-    fetchAnalyticsData();
-  }, [selectedTab, selectedValue, selectedSalespersonIds]);
-
-  // Transform raw API data for the chart (grouped by salesperson)
-  const chartData = useMemo(() => {
-    if (!analysisData || analysisData.length === 0) return [];
-
-    const groupedData = Object.values(
-      analysisData.reduce((acc, curr) => {
-        if (!acc[curr.salesPersonId]) {
-          acc[curr.salesPersonId] = {
-            salesPersonId: curr.salesPersonId,
-            salesPersonName: curr.salesPersonName,
-            totalSales: 0,
-            totalOrders: 0,
-            totalContribution: 0,
-          };
-        }
-        acc[curr.salesPersonId].totalSales += curr.totalSales;
-        acc[curr.salesPersonId].totalOrders += curr.totalOrders;
-        acc[curr.salesPersonId].totalContribution += curr.percentOfTotal;
-        return acc;
-      }, {})
-    );
-
-    // Format for the chart component
-    return groupedData.map((person) => ({
-      label: person.salesPersonName,
-      totalSales: person.totalSales,
-      totalOrders: person.totalOrders,
-      totalContribution: person.totalContribution,
-      // Add other properties if needed by your chart
-    }));
-  }, [analysisData]);
-
-  // Group data for accordions (each salesperson's detailed records)
-  const accordionData = useMemo(() => {
-    if (!analysisData || analysisData.length === 0) return [];
-
-    // Group by salesPersonId but keep all individual records
-    const grouped = analysisData.reduce((acc, curr) => {
-      const key = curr.salesPersonId;
-      if (!acc[key]) {
-        acc[key] = {
-          salesperson: curr.salesPersonName,
-          sales: [],
-        };
-      }
-      acc[key].sales.push(curr);
-      return acc;
-    }, {});
-
-    return Object.values(grouped);
-  }, [analysisData]);
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+    fetchInitialData();
+  }, []);
 
   return isLoading == true ? (
-    <SpinnerLoader label="Loading analytics..." />
+    <SpinnerLoader label="Loading sales analytics..." />
   ) : (
-    <div className="flex flex-col min-h-full">
+    <div className="flex flex-col min-h-[84.6vh]">
       <div className="flex-1">
-        {/* View Toggle */}
-        <ViewToggle onToggle={setViewMode} viewMode={viewMode} />
+        {/* Tabs only control state */}
+        <CustomTabs
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          tabs={[
+            { id: "analysis", label: "Analysis", icon: "📊" },
+            { id: "comparison", label: "Comparison", icon: "⚖️" },
+          ]}
+        />
 
-        {viewMode === "graphical" ? (
-          <div className="space-y-4">
-            <div className="flex items-center justify-end">
-              <DownloadButton
-                type="pdf"
-                title={`Sales Analysis Report (${selectedTab}ly)`}
-                chartRefs={[salesChartRef, contributionChartRef]}
-              />
-            </div>
-            {/* Graphical Section */}
-            <div className="grid grid-cols-2 grid-rows-2 md:grid-rows-1 gap-6">
-              <div className="col-span-2 lg:col-span-1">
-                <SalesAnalyticsChartCard
-                  ref={salesChartRef}
-                  tab={selectedTab}
-                  value={selectedValue}
-                  data={chartData}
-                />
-              </div>
-              <div className="col-span-2 lg:col-span-1">
-                <SalesContributionChartCard
-                  ref={contributionChartRef}
-                  tab={selectedTab}
-                  value={selectedValue}
-                  data={chartData}
-                />
-              </div>
-            </div>
-          </div>
-        ) : (
-          /* Tabular Section */
-          <div className="grid grid-cols-1 gap-6">
-            <Accordion data={accordionData} />
-          </div>
+        {/* ✅ Shared Filter Card */}
+        <div className="mb-4">
+          <FilterDataCard
+            context="sales"
+            selectedTab={selectedTab}
+            setSelectedTab={setSelectedTab}
+            selectedValue={selectedValue}
+            setSelectedValue={setSelectedValue}
+            listData={salespersons}
+            selectedIds={selectedSalespersonIds}
+            setSelectedIds={setSelectedSalespersonIds}
+          />
+        </div>
+
+        {/* Sub-Sales Analytics pages */}
+        {activeTab === "analysis" && (
+          <AnalyticsSalesAnalysis
+            selectedTab={selectedTab}
+            selectedValue={selectedValue}
+            selectedSalespersonIds={selectedSalespersonIds}
+            analysisData={analysisData}
+            setAnalysisData={setAnalysisData}
+          />
+        )}
+        {activeTab === "comparison" && (
+          <AnalyticsSalesComparison
+            selectedTab={selectedTab}
+            selectedValue={selectedValue}
+            salespersons={salespersons}
+            selectedSalespersonIds={selectedSalespersonIds}
+            analysisData={analysisData}
+            setAnalysisData={setAnalysisData}
+          />
         )}
       </div>
     </div>

@@ -2,17 +2,19 @@ import { useState } from "react";
 import { SlidersHorizontal, Funnel } from "lucide-react";
 import DateTabs from "../Tabs/DateTabs";
 import SalesPersonModal from "../Modals/SalesPersonModal";
+import ProductsModal from "../Modals/ProductsModal";
 
 const FilterDataCard = ({
+  context, // "sales" | "products"
   selectedTab,
   setSelectedTab,
   selectedValue,
   setSelectedValue,
-  salespersons,
-  selectedSalespersonIds,
-  setSelectedSalespersonIds,
+  listData, // salespersons OR brands
+  selectedIds,
+  setSelectedIds,
 }) => {
-  const [isSalesModalOpen, setIsSalesModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <div>
@@ -33,15 +35,19 @@ const FilterDataCard = ({
               />
             </div>
           </div>
-          {/* Salesperson Selection Section */}
+          {/* Salesperson/Brand Selection Section */}
           <div className="flex gap-2">
             <h2 className="flex items-center gap-2 text-base md:text-md font-semibold text-[#BEB7DF] tracking-wide">
               <Funnel />
-              <span className="hidden md:inline">Select Salespersons</span>
+              <span className="hidden md:inline">
+                {context === "sales"
+                  ? "Select Salespersons"
+                  : "Select Products"}
+              </span>
             </h2>
             <div>
               <button
-                onClick={() => setIsSalesModalOpen(true)}
+                onClick={() => setIsModalOpen(true)}
                 className="px-4 py-2 gap-2 rounded-lg bg-[#38384a] text-gray-300 hover:bg-[#8a4fff] hover:text-white transition-colors whitespace-nowrap"
               >
                 <SlidersHorizontal />
@@ -51,13 +57,25 @@ const FilterDataCard = ({
         </div>
       </div>
 
-      <SalesPersonModal
-        isOpen={isSalesModalOpen}
-        onClose={() => setIsSalesModalOpen(false)}
-        salespersons={salespersons}
-        selectedSalespersonIds={selectedSalespersonIds}
-        setSelectedSalespersonIds={setSelectedSalespersonIds}
-      />
+      {/* Conditionally render modal */}
+      {context === "sales" && (
+        <SalesPersonModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          salespersons={listData}
+          selectedSalespersonIds={selectedIds}
+          setSelectedSalespersonIds={setSelectedIds}
+        />
+      )}
+      {context === "products" && (
+        <ProductsModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          brands={listData}
+          selectedProductIds={selectedIds}
+          setSelectedProductIds={setSelectedIds}
+        />
+      )}
     </div>
   );
 };

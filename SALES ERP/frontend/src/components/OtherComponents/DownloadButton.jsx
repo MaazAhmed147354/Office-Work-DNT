@@ -13,6 +13,7 @@ import { downloadExcelWithTable } from "../../utils/downloadExcel";
  */
 const DownloadButton = ({
   type,
+  buttonText = "Download",
   title,
   columns,
   data,
@@ -43,11 +44,11 @@ const DownloadButton = ({
     >
       {type === "pdf" ? (
         <>
-          <FileDown size={18} /> Download PDF
+          <FileDown size={18} /> {buttonText}
         </>
       ) : (
         <>
-          <FileSpreadsheet size={18} /> Download Excel
+          <FileSpreadsheet size={18} /> {buttonText}
         </>
       )}
     </button>

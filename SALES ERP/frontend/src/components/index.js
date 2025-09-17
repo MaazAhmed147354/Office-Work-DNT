@@ -26,18 +26,20 @@ export { default as SalesAnalyticsChartCard } from "./Charts/SalesAnalyticsChart
 export { default as SalesComparisonChartCard } from "./Charts/SalesComparisonChartCard";
 
 export { default as DateTabs } from "./Tabs/DateTabs";
+export { default as CustomTabs } from "./Tabs/CustomTabs";
 export { default as AnalyticsTabs } from "./Tabs/AnalyticsTabs";
 
 export { default as DateModal } from "./Modals/DateModal";
 export { default as LogoutModal } from "./Modals/LogoutModal";
 export { default as SalesPersonModal } from "./Modals/SalesPersonModal";
+export { default as ProductsModal } from "./Modals/ProductsModal";
 
 export { default as PrivateRoute } from "./Routes/PrivateRoute";
 
 export { default as SpinnerLoader } from "./Loaders/SpinnerLoader";
 
 export { default as Toast } from "./OtherComponents/Toast";
-export { default as ViewToggle } from "./OtherComponents/ViewToggle";
+export { default as ToggleSwitch } from "./OtherComponents/ToggleSwitch";
 export { default as Accordion } from "./OtherComponents/Accordion";
 export { default as DownloadButton } from "./OtherComponents/DownloadButton";
 export { default as CustomDropdown } from "./OtherComponents/CustomDropdown";

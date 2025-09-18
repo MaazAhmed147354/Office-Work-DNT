@@ -1,241 +1,263 @@
-// import { format, startOfWeek, addWeeks } from "date-fns";
-// import { useState, useEffect, useMemo, useRef } from "react";
-// import { PieChart, Table } from "lucide-react";
-// import { useToast } from "../context/ToastContext";
-// import {
-//   SpinnerLoader,
-//   ToggleSwitch,
-//   DownloadButton,
-//   SalesAnalyticsChartCard,
-//   Accordion,
-//   SalesContributionChartCard,
-// } from "../components";
-// import analyticsService from "../services/analyticsService";
+import { format, startOfWeek, addWeeks } from "date-fns";
+import { useState, useEffect, useMemo, useRef } from "react";
+import { PieChart, Table, ChevronDown, ChevronUp } from "lucide-react";
+import { useToast } from "../context/ToastContext";
+import {
+  SpinnerLoader,
+  ToggleSwitch,
+  DownloadButton,
+  AnalyticsChartCard,
+  ContributionChartCard,
+  Accordion,
+} from "../components";
+import analyticsService from "../services/analyticsService";
 
-// const AnalyticsProductsAnalysis = ({
-//   selectedTab,
-//   selectedValue,
-//   selectedSalespersonIds,
-//   analysisData,
-//   setAnalysisData,
-// }) => {
-//   // State for page load
-//   const [isLoading, setIsLoading] = useState(false);
-//   const [error, setError] = useState(null);
+const AnalyticsProductsAnalysis = ({
+  selectedTab,
+  selectedValue,
+  brands,
+  selectedBrandIds,
+  selectedProductIds,
+  analysisData,
+  setAnalysisData,
+}) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [viewMode, setViewMode] = useState("graphical");
+  const [openBrandIndex, setOpenBrandIndex] = useState(null);
 
-//   const [viewMode, setViewMode] = useState("graphical");
+  // create refs for charts
+  const analysisChartRef = useRef(null);
+  const contributionChartRef = useRef(null);
 
-//   // create refs for charts
-//   const salesChartRef = useRef(null);
-//   const contributionChartRef = useRef(null);
+  const { showToast } = useToast();
+  const didMount = useRef(false);
 
-//   const { showToast } = useToast();
+  // fetch product analytics when filters change
+  useEffect(() => {
+    if (!didMount.current) {
+      didMount.current = true;
+      return;
+    }
+    const fetchAnalytics = async () => {
+      if (!brands || brands.length === 0 || !selectedTab || !selectedValue) {
+        setAnalysisData([]);
+        return;
+      }
+      try {
+        setIsLoading(true);
+        setError(null);
 
-//   const didMount = useRef(false);
+        const rangeTypeMap = {
+          year: "yearly",
+          month: "monthly",
+          week: "weekly",
+          quarter: "quarterly",
+        };
+        const rangeType = rangeTypeMap[selectedTab];
 
-//   // Fetch analytics data when filters change
-//   useEffect(() => {
-//     // Skip first load - handled in parent
-//     if (!didMount.current) {
-//       didMount.current = true;
-//       return;
-//     }
+        let referenceDate;
+        if (selectedTab === "year") {
+          referenceDate = `${selectedValue}-01-01`;
+        } else if (selectedTab === "month") {
+          referenceDate = `${selectedValue}-01`;
+        } else if (selectedTab === "week") {
+          const year = selectedValue.substring(0, 4);
+          const weekNum = parseInt(selectedValue.substring(6));
+          const firstWeek = startOfWeek(new Date(parseInt(year), 0, 1));
+          const targetDate = addWeeks(firstWeek, weekNum - 1);
+          referenceDate = format(targetDate, "yyyy-MM-dd");
+        } else if (selectedTab === "quarter") {
+          const quarterMap = { Q1: "01", Q2: "04", Q3: "07", Q4: "10" };
+          const year = new Date().getFullYear();
+          referenceDate = `${year}-${quarterMap[selectedValue]}-01`;
+        }
 
-//     const fetchAnalyticsData = async () => {
-//       // Don't fetch if no salespersons selected or filters are incomplete
-//       if (
-//         selectedSalespersonIds.length === 0 ||
-//         !selectedTab ||
-//         !selectedValue
-//       ) {
-//         setAnalysisData([]);
-//         showToast("Child: Please select all filters", "warning");
-//         return;
-//       }
+        const brandIds =
+          selectedBrandIds.length > 0
+            ? selectedBrandIds
+            : brands.map((b) => b.id);
 
-//       try {
-//         setIsLoading(true);
-//         setError(null);
+        const data = await analyticsService.GetProductsAnalysis(
+          brandIds,
+          rangeType,
+          referenceDate
+        );
+        setAnalysisData(data);
+        showToast("Products Analytics data fetched", "success");
+      } catch (err) {
+        setError("Failed to fetch products analytics");
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchAnalytics();
+  }, [selectedBrandIds, selectedTab, selectedValue]);
 
-//         // Map UI tab values to API rangeType
-//         const rangeTypeMap = {
-//           year: "yearly",
-//           month: "monthly",
-//           week: "weekly",
-//           quarter: "quarterly",
-//         };
-//         const rangeType = rangeTypeMap[selectedTab];
+  // ✅ Restructure response once
+  const structuredData = useMemo(() => {
+    if (!analysisData || analysisData.length === 0) return [];
 
-//         // Format referenceDate based on selectedTab and selectedValue
-//         let referenceDate;
-//         if (selectedTab === "year") {
-//           referenceDate = `${selectedValue}-01-01`; // YYYY-01-01
-//         } else if (selectedTab === "month") {
-//           referenceDate = `${selectedValue}-01`; // YYYY-MM-01
-//         } else if (selectedTab === "week") {
-//           console.log("Week Date ", selectedValue);
-//           // Using date-fns library
-//           const year = selectedValue.substring(0, 4);
-//           const weekNum = parseInt(selectedValue.substring(6));
-//           // Create date for first week of the year
-//           const firstWeek = startOfWeek(new Date(parseInt(year), 0, 1));
-//           const targetDate = addWeeks(firstWeek, weekNum - 1);
-//           referenceDate = format(targetDate, "yyyy-MM-dd");
-//         } else if (selectedTab === "quarter") {
-//           // Mapping to first date of selected quarter
-//           const quarterMap = { Q1: "01", Q2: "04", Q3: "07", Q4: "10" };
-//           const year = new Date().getFullYear(); // You might need to get year from somewhere
-//           referenceDate = `${year}-${quarterMap[selectedValue]}-01`;
-//         }
+    const brandMap = {};
 
-//         const data = await analyticsService.GetSalesAnalysis(
-//           selectedSalespersonIds,
-//           rangeType,
-//           referenceDate
-//         );
+    analysisData.forEach((row) => {
+      const { brandId, productId } = row;
 
-//         if (!data || data.length === 0) {
-//           setAnalysisData([]);
-//           showToast(
-//             "No sales data available for the selected period.",
-//             "warning"
-//           );
-//         } else {
-//           setAnalysisData(data);
-//           showToast("Sales Analytics data fetched", "success");
-//         }
-//       } catch (err) {
-//         setError("Failed to load analytics data.");
-//         console.error(err);
-//       } finally {
-//         setIsLoading(false);
-//       }
-//     };
+      if (!brandMap[brandId]) {
+        const brandName = brands.find((b) => b.id === brandId)?.name || "";
+        brandMap[brandId] = {
+          brandId,
+          brandName,
+          products: {},
+        };
+      }
 
-//     fetchAnalyticsData();
-//   }, [selectedTab, selectedValue, selectedSalespersonIds]);
+      if (!brandMap[brandId].products[productId]) {
+        brandMap[brandId].products[productId] = {
+          productId,
+          productName: row.productName,
+          breakdown: [],
+        };
+      }
 
-//   // Transform raw API data for the chart (grouped by salesperson)
-//   const chartData = useMemo(() => {
-//     if (!analysisData || analysisData.length === 0) return [];
+      brandMap[brandId].products[productId].breakdown.push({
+        period: row.period,
+        totalSales: row.totalSales,
+        totalOrders: row.totalOrders,
+        percentOfTotal: row.percentOfTotal,
+      });
+    });
 
-//     const groupedData = Object.values(
-//       analysisData.reduce((acc, curr) => {
-//         if (!acc[curr.salesPersonId]) {
-//           acc[curr.salesPersonId] = {
-//             salesPersonId: curr.salesPersonId,
-//             salesPersonName: curr.salesPersonName,
-//             totalSales: 0,
-//             totalOrders: 0,
-//             totalContribution: 0,
-//           };
-//         }
-//         acc[curr.salesPersonId].totalSales += curr.totalSales;
-//         acc[curr.salesPersonId].totalOrders += curr.totalOrders;
-//         acc[curr.salesPersonId].totalContribution += curr.percentOfTotal;
-//         return acc;
-//       }, {})
-//     );
+    return Object.values(brandMap).map((brand) => ({
+      brandId: brand.brandId,
+      brandName: brand.brandName,
+      products: Object.values(brand.products),
+    }));
+  }, [analysisData, brands]);
 
-//     // Format for the chart component
-//     return groupedData.map((person) => ({
-//       label: person.salesPersonName,
-//       totalSales: person.totalSales,
-//       totalOrders: person.totalOrders,
-//       totalContribution: person.totalContribution,
-//       // Add other properties if needed by your chart
-//     }));
-//   }, [analysisData]);
+  // ✅ Chart Data → brand totals
+  const chartData = useMemo(() => {
+    if (!structuredData || structuredData.length === 0) return [];
 
-//   // Group data for accordions (each salesperson's detailed records)
-//   const accordionData = useMemo(() => {
-//     if (!analysisData || analysisData.length === 0) return [];
+    return structuredData.map((brand) => {
+      const totalSales = brand.products.reduce(
+        (sum, p) => sum + p.breakdown.reduce((s, b) => s + b.totalSales, 0),
+        0
+      );
+      const totalOrders = brand.products.reduce(
+        (sum, p) => sum + p.breakdown.reduce((s, b) => s + b.totalOrders, 0),
+        0
+      );
+      const totalContribution = brand.products.reduce(
+        (sum, p) => sum + p.breakdown.reduce((s, b) => s + b.percentOfTotal, 0),
+        0
+      );
+      return {
+        label: brand.brandName,
+        totalSales,
+        totalOrders,
+        totalContribution,
+      };
+    });
+  }, [structuredData]);
 
-//     // Group by salesPersonId but keep all individual records
-//     const grouped = analysisData.reduce((acc, curr) => {
-//       const key = curr.salesPersonId;
-//       if (!acc[key]) {
-//         acc[key] = {
-//           salesperson: curr.salesPersonName,
-//           sales: [],
-//         };
-//       }
-//       acc[key].sales.push(curr);
-//       return acc;
-//     }, {});
+  // ✅ Accordion Data → products grouped under each brand
+  const accordionData = useMemo(() => {
+    if (!structuredData || structuredData.length === 0) return [];
 
-//     return Object.values(grouped);
-//   }, [analysisData]);
+    return structuredData.map((brand) => ({
+      brand: brand.brandName,
+      products: brand.products.filter((p) =>
+        selectedProductIds.includes(p.productId)
+      ),
+    }));
+  }, [structuredData, selectedProductIds]);
 
-//   if (error) {
-//     return <div>Error: {error}</div>;
-//   }
+  if (error) return <div>{error}</div>;
 
-//   return isLoading == true ? (
-//     <SpinnerLoader label="Loading analytics..." />
-//   ) : (
-//     <div className="flex flex-col min-h-full">
-//       <div className="flex-1">
-//         {/* View Toggle */}
-//         <ToggleSwitch
-//           active={viewMode}
-//           onToggle={setViewMode}
-//           options={[
-//             {
-//               id: "graphical",
-//               label: "Graphical",
-//               icon: <PieChart size={18} />,
-//             },
-//             { id: "tabular", label: "Tabular", icon: <Table size={18} /> },
-//           ]}
-//         />
+  return isLoading ? (
+    <SpinnerLoader label="Loading product analytics..." />
+  ) : (
+    <div className="flex flex-col min-h-full">
+      <ToggleSwitch
+        active={viewMode}
+        onToggle={setViewMode}
+        options={[
+          { id: "graphical", label: "Graphical", icon: <PieChart size={18} /> },
+          { id: "tabular", label: "Tabular", icon: <Table size={18} /> },
+        ]}
+      />
 
-//         {viewMode === "graphical" ? (
-//           <div className="space-y-4">
-//             <div className="flex items-center justify-end">
-//               <DownloadButton
-//                 type="pdf"
-//                 title={`Sales Analysis Report (${selectedTab}ly)`}
-//                 chartRefs={[salesChartRef, contributionChartRef]}
-//               />
-//             </div>
-//             {/* Graphical Section */}
-//             <div className="grid grid-cols-2 grid-rows-2 md:grid-rows-1 gap-6">
-//               <div className="col-span-2 lg:col-span-1">
-//                 <SalesAnalyticsChartCard
-//                   ref={salesChartRef}
-//                   tab={selectedTab}
-//                   value={selectedValue}
-//                   data={chartData}
-//                 />
-//               </div>
-//               <div className="col-span-2 lg:col-span-1">
-//                 <SalesContributionChartCard
-//                   ref={contributionChartRef}
-//                   tab={selectedTab}
-//                   value={selectedValue}
-//                   data={chartData}
-//                 />
-//               </div>
-//             </div>
-//           </div>
-//         ) : (
-//           /* Tabular Section */
-//           <div className="grid grid-cols-1 gap-6">
-//             <Accordion data={accordionData} />
-//           </div>
-//         )}
-//       </div>
-//     </div>
-//   );
-// };
+      {viewMode === "graphical" ? (
+        <div className="space-y-4">
+          <div className="flex items-center justify-end">
+            <DownloadButton
+              type="pdf"
+              title={`Products Analysis Report (${selectedTab}ly)`}
+              chartRefs={[analysisChartRef, contributionChartRef]}
+            />
+          </div>
+          {/* Graphical Section */}
+          <div className="grid grid-cols-1 grid-rows-2 md:grid-rows-1 gap-6">
+            <div className="col-span-1 lg:col-span-1">
+              <AnalyticsChartCard
+                ref={analysisChartRef}
+                tab={selectedTab}
+                value={selectedValue}
+                data={chartData}
+              />
+            </div>
+            <div className="col-span-1 lg:col-span-1">
+              <ContributionChartCard
+                ref={contributionChartRef}
+                tab={selectedTab}
+                value={selectedValue}
+                data={chartData}
+              />
+            </div>
+          </div>
+        </div>
+      ) : (
+        // ✅ Tabular Section
+        <div className="space-y-4">
+          {accordionData.map((brand, index) => (
+            <div
+              key={brand.brandId || index}
+              className="bg-[#252538] border border-[#38384a] rounded-xl overflow-hidden"
+            >
+              {/* Brand Accordion Header */}
+              <button
+                onClick={() =>
+                  setOpenBrandIndex(openBrandIndex === index ? null : index)
+                }
+                className="w-full text-left p-4 flex justify-between items-center hover:bg-[#38384a]"
+              >
+                <span className="font-medium text-[#BEB7DF]">
+                  {brand.brand}
+                </span>
+                <span className="text-gray-400">
+                  {openBrandIndex === index ? <ChevronUp /> : <ChevronDown />}
+                </span>
+              </button>
 
-// export default AnalyticsProductsAnalysis;
-
-import React from "react";
-
-function AnalyticsProductsAnalysis() {
-  return <>This is Analyis of Products</>;
-}
+              {/* Brand Content */}
+              {openBrandIndex === index && (
+                <div className="p-3 space-y-3">
+                  <Accordion
+                    data={brand.products.map((product) => ({
+                      name: product.productName,
+                      sales: product.breakdown,
+                    }))}
+                  />
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
 export default AnalyticsProductsAnalysis;

@@ -16,14 +16,14 @@ export { default as ProductsTable } from "./Tables/ProductsTable";
 export { default as TopProductsTableCard } from "./Tables/TopProductsTableCard";
 
 export { default as GlobalChart } from "./Charts/GlobalChart";
-export { default as SalesContributionChartCard } from "./Charts/SalesContributionChartCard";
 export { default as RadarChartCard } from "./Charts/RadarChartCard";
 export { default as ProgressChartCard } from "./Charts/ProgressChartCard";
 export { default as SalesPersonChartCard } from "./Charts/SalesPersonChartCard";
 export { default as ProductSalesChartCard } from "./Charts/ProductSalesChartCard";
 export { default as MonthlySalesChartCard } from "./Charts/MonthlySalesChartCard";
-export { default as SalesAnalyticsChartCard } from "./Charts/SalesAnalyticsChartCard";
-export { default as SalesComparisonChartCard } from "./Charts/SalesComparisonChartCard";
+export { default as AnalyticsChartCard } from "./Charts/AnalyticsChartCard";
+export { default as ContributionChartCard } from "./Charts/ContributionChartCard";
+export { default as ComparisonChartCard } from "./Charts/ComparisonChartCard";
 
 export { default as DateTabs } from "./Tabs/DateTabs";
 export { default as CustomTabs } from "./Tabs/CustomTabs";

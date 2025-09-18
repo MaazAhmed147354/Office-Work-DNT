@@ -1,7 +1,13 @@
 import { useEffect, useRef } from "react";
 import { Chart } from "chart.js/auto";
 
-const GlobalChart = ({ type, labels, datasets, options = {} }) => {
+const GlobalChart = ({
+  type,
+  customHeight = "h-64",
+  labels,
+  datasets,
+  options = {},
+}) => {
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
 
@@ -63,7 +69,7 @@ const GlobalChart = ({ type, labels, datasets, options = {} }) => {
   }, [type, labels, datasets, options]);
 
   return (
-    <div className="h-64">
+    <div className={`${customHeight}`}>
       <canvas ref={chartRef} />
     </div>
   );

@@ -5,7 +5,7 @@ import {
   SpinnerLoader,
   CustomDropdown,
   DownloadButton,
-  SalesComparisonChartCard,
+  ComparisonChartCard,
 } from "../components";
 import analyticsService from "../services/analyticsService";
 
@@ -217,7 +217,7 @@ const AnalyticsSalesComparison = ({
             />
           </div>
           <div className="grid grid-cols-1 gap-6">
-            <SalesComparisonChartCard
+            <ComparisonChartCard
               ref={comparisonChartRef}
               tab={selectedTab}
               value={selectedValue}

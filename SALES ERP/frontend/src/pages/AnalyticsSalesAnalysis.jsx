@@ -6,9 +6,9 @@ import {
   SpinnerLoader,
   ToggleSwitch,
   DownloadButton,
-  SalesAnalyticsChartCard,
+  AnalyticsChartCard,
+  ContributionChartCard,
   Accordion,
-  SalesContributionChartCard,
 } from "../components";
 import analyticsService from "../services/analyticsService";
 
@@ -26,7 +26,7 @@ const AnalyticsSalesAnalysis = ({
   const [viewMode, setViewMode] = useState("graphical");
 
   // create refs for charts
-  const salesChartRef = useRef(null);
+  const analysisChartRef = useRef(null);
   const contributionChartRef = useRef(null);
 
   const { showToast } = useToast();
@@ -156,7 +156,7 @@ const AnalyticsSalesAnalysis = ({
       const key = curr.salesPersonId;
       if (!acc[key]) {
         acc[key] = {
-          salesperson: curr.salesPersonName,
+          name: curr.salesPersonName,
           sales: [],
         };
       }
@@ -197,21 +197,21 @@ const AnalyticsSalesAnalysis = ({
                 type="pdf"
                 buttonText="Download PDF"
                 title={`Sales Analysis Report (${selectedTab}ly)`}
-                chartRefs={[salesChartRef, contributionChartRef]}
+                chartRefs={[analysisChartRef, contributionChartRef]}
               />
             </div>
             {/* Graphical Section */}
             <div className="grid grid-cols-2 grid-rows-2 md:grid-rows-1 gap-6">
               <div className="col-span-2 lg:col-span-1">
-                <SalesAnalyticsChartCard
-                  ref={salesChartRef}
+                <AnalyticsChartCard
+                  ref={analysisChartRef}
                   tab={selectedTab}
                   value={selectedValue}
                   data={chartData}
                 />
               </div>
               <div className="col-span-2 lg:col-span-1">
-                <SalesContributionChartCard
+                <ContributionChartCard
                   ref={contributionChartRef}
                   tab={selectedTab}
                   value={selectedValue}

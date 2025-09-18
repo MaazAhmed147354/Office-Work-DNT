@@ -21,7 +21,7 @@ const Accordion = ({ data }) => {
   // ✅ Transform sales data once, reuse everywhere
   const transformedData = useMemo(() => {
     return data.map((item) => ({
-      salesperson: item.salesperson,
+      name: item.name,
       rows: item.sales.map((sale) => ({
         period: sale.period,
         totalSales: sale.totalSales,
@@ -33,7 +33,7 @@ const Accordion = ({ data }) => {
 
   // ✅ Collect all tables data for Download All
   const allTablesData = transformedData.map((sp) => ({
-    title: `Sales Performance - ${sp.salesperson.toUpperCase()}`,
+    title: `Sales Performance - ${sp.name.toUpperCase()}`,
     rows: sp.rows,
   }));
 
@@ -72,9 +72,7 @@ const Accordion = ({ data }) => {
               onClick={() => toggleAccordion(index)}
               className="w-full text-left p-4 flex justify-between items-center hover:bg-[#38384a]"
             >
-              <span className="font-medium text-[#BEB7DF]">
-                {sp.salesperson}
-              </span>
+              <span className="font-medium text-[#BEB7DF]">{sp.name}</span>
               <span className="text-gray-400">
                 {openIndex === index
                   ? <ChevronUp /> || "▲"
@@ -89,7 +87,7 @@ const Accordion = ({ data }) => {
                   <DownloadButton
                     type="excel"
                     buttonText="Download Excel"
-                    title={`Sales Performance - ${sp.salesperson.toUpperCase()}`}
+                    title={`Sales Performance - ${sp.name.toUpperCase()}`}
                     data={sp.rows}
                     columns={columns}
                   />

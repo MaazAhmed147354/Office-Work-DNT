@@ -13,6 +13,8 @@ const FilterDataCard = ({
   listData, // salespersons OR brands
   selectedIds,
   setSelectedIds,
+  selectedBrandIds,
+  setSelectedBrandIds,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -72,6 +74,8 @@ const FilterDataCard = ({
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           brands={listData}
+          selectedBrandIds={selectedBrandIds}
+          setSelectedBrandIds={setSelectedBrandIds}
           selectedProductIds={selectedIds}
           setSelectedProductIds={setSelectedIds}
         />

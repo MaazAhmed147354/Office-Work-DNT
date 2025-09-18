@@ -41,6 +41,7 @@ const ComparisonChartCard = forwardRef(({ tab, value, chartData }, ref) => {
 
       <GlobalChart
         type="bar"
+        customHeight="h-96"
         labels={chartData.labels}
         datasets={chartData.datasets}
         options={chartOptions}

@@ -73,6 +73,7 @@ const ContributionChartCard = forwardRef(({ tab, value, data }, ref) => {
       </h3>
       <GlobalChart
         type="polarArea"
+        customHeight="h-96"
         labels={chartData.labels}
         datasets={chartData.datasets}
         options={chartOptions}

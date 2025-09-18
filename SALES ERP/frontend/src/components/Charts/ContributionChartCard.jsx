@@ -2,7 +2,7 @@ import { useMemo, forwardRef } from "react";
 import GlobalChart from "./GlobalChart";
 import { polarAreaChartBaseConfig } from "../../data/chartConfig";
 
-const SalesContributionChartCard = forwardRef(({ tab, value, data }, ref) => {
+const ContributionChartCard = forwardRef(({ tab, value, data }, ref) => {
   // ✅ Memoized labels & contributions
   const labels = useMemo(() => data.map((item) => item.label), [data]);
   const contribution = useMemo(
@@ -81,4 +81,4 @@ const SalesContributionChartCard = forwardRef(({ tab, value, data }, ref) => {
   );
 });
 
-export default SalesContributionChartCard;
+export default ContributionChartCard;

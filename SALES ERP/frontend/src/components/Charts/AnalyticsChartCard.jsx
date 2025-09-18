@@ -2,7 +2,7 @@ import { useMemo, useCallback, forwardRef } from "react";
 import GlobalChart from "./GlobalChart";
 import { barChartBaseConfig } from "../../data/chartConfig";
 
-const SalesAnalyticsChartCard = forwardRef(({ tab, value, data }, ref) => {
+const AnalyticsChartCard = forwardRef(({ tab, value, data }, ref) => {
   // ✅ Memoized labels & sales
   const labels = useMemo(() => data.map((item) => item.label), [data]);
   const sales = useMemo(() => data.map((item) => item.totalSales), [data]);
@@ -90,4 +90,4 @@ const SalesAnalyticsChartCard = forwardRef(({ tab, value, data }, ref) => {
   );
 });
 
-export default SalesAnalyticsChartCard;
+export default AnalyticsChartCard;

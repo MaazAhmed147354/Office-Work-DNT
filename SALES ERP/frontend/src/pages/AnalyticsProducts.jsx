@@ -47,7 +47,9 @@ const AnalyticsProducts = () => {
         setBrands(Object.values(groupedBrands));
 
         // by default select all brands
-        const allbrandIds = Object.keys(groupedBrands).map((id) => parseInt(id));
+        const allbrandIds = Object.keys(groupedBrands).map((id) =>
+          parseInt(id)
+        );
         setSelectedBrandIds(allbrandIds);
 
         // by default select all products
@@ -57,6 +59,7 @@ const AnalyticsProducts = () => {
         // set default reference date (week)
         const today = new Date();
         const referenceDate = format(today, "yyyy-MM-dd");
+        // Converting todays date to week format for later fetch
         const weekValue = format(today, "yyyy-'W'II");
         setSelectedValue(weekValue);
 

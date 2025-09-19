@@ -194,6 +194,7 @@ const AnalyticsSalespersonComparison = ({
             value: sp.id,
             label: sp.username || sp.name,
           }))}
+          placeholder="Select Salesperson"
         />
 
         {/* Salesperson 2 dropdown - placeholder */}

@@ -240,6 +240,8 @@ const AnalyticsProductsComparison = ({
           }
           onSelect={setSelected1}
           options={compareMode === "brand" ? brandOptions : productOptions}
+          customWidth="min-w-[160px]"
+          searchable={true}
         />
 
         <CustomDropdown
@@ -252,6 +254,8 @@ const AnalyticsProductsComparison = ({
           }
           onSelect={setSelected2}
           options={compareMode === "brand" ? brandOptions : productOptions}
+          customWidth="min-w-[160px]"
+          searchable={true}
         />
       </div>
 

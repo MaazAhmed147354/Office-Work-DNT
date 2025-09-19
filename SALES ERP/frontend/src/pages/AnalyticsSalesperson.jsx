@@ -24,10 +24,10 @@ const AnalyticsSalesperson = () => {
       try {
         setIsLoading(true);
 
-        const list = await analyticsService.getSalespersonList();
-        setSalespersons(list);
+        const salespersonList = await analyticsService.getSalespersonList();
+        setSalespersons(salespersonList);
 
-        const initialIds = list.map((sp) => sp.id);
+        const initialIds = salespersonList.map((sp) => sp.id);
         setSelectedSalespersonIds(initialIds);
 
         const today = new Date();

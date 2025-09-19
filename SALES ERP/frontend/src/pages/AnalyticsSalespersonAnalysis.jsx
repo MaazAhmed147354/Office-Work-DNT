@@ -204,6 +204,7 @@ const AnalyticsSalespersonAnalysis = ({
                 buttonText="Download PDF"
                 title={`Sales Analysis Report (${selectedTab}ly)`}
                 chartRefs={[analysisChartRef, contributionChartRef]}
+                customSize={{ width: 400, height: 250 }}
               />
             </div>
             {/* Graphical Section */}

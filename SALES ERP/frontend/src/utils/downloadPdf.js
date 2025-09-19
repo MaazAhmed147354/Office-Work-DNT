@@ -6,20 +6,23 @@ import html2canvas from "html2canvas";
  * @param {string} title - Report title
  * @param {Array} cardRefs - Array of refs to Card components (Cards with heading + chart)
  * @param {string} fileName - Output PDF filename
+ * @param {string} customSize - Optional custom size { width, height } for each chart image
  */
 export const downloadPdfWithCharts = async (
   title,
   cardRefs,
-  fileName = "report.pdf"
+  fileName = "report.pdf",
+  customSize = {} // 👈 new optional param
 ) => {
+  const { width: customWidth, height: customHeight } = customSize;
   const doc = new jsPDF("p", "pt", "a4");
   const pageWidth = doc.internal.pageSize.getWidth();
   const margin = 40;
   let yPos = margin;
 
-  // ✅ Add Logo
+  // ✅ Logo
   try {
-    const logo = await fetch("/dreams.jpg"); // place logo in /public
+    const logo = await fetch("/dreams.jpg");
     const logoBuffer = await logo.arrayBuffer();
     const base64Logo = btoa(
       new Uint8Array(logoBuffer).reduce(
@@ -39,7 +42,7 @@ export const downloadPdfWithCharts = async (
     console.warn("Logo not found, skipping...");
   }
 
-  // ✅ Add Heading
+  // ✅ Heading
   doc.setFont("times", "bold");
   doc.setFontSize(18);
   doc.text("DREAMS NETWORK", pageWidth / 2, yPos + 20, { align: "center" });
@@ -47,7 +50,7 @@ export const downloadPdfWithCharts = async (
   doc.text(title.toUpperCase(), pageWidth / 2, yPos + 45, { align: "center" });
   yPos += 100;
 
-  // ✅ Add each Card as screenshot
+  // ✅ Loop charts
   for (let i = 0; i < cardRefs.length; i++) {
     const cardRef = cardRefs[i];
     if (!cardRef?.current) continue;
@@ -55,11 +58,12 @@ export const downloadPdfWithCharts = async (
     const canvas = await html2canvas(cardRef.current, { scale: 2 });
     const imgData = canvas.toDataURL("image/png");
 
-    const imgWidth = pageWidth - margin * 2;
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    // 👇 Allow override with custom width/height
+    const imgWidth = customWidth || pageWidth - margin * 2;
+    const imgHeight = customHeight || (canvas.height * imgWidth) / canvas.width;
+    const xPos = (pageWidth - imgWidth) / 2; // ✅ center horizontally
 
-    // Render directly under heading
-    doc.addImage(imgData, "PNG", margin, yPos, imgWidth, imgHeight);
+    doc.addImage(imgData, "PNG", xPos, yPos, imgWidth, imgHeight);
     yPos += imgHeight + 20;
   }
 

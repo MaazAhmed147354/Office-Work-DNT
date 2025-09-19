@@ -206,6 +206,7 @@ const AnalyticsProductsAnalysis = ({
               type="pdf"
               title={`Products Analysis Report (${selectedTab}ly)`}
               chartRefs={[analysisChartRef, contributionChartRef]}
+              customSize={{ width: 510, height: 250 }}
             />
           </div>
           {/* Graphical Section */}

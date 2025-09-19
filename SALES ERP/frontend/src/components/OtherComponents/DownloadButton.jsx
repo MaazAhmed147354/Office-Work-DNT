@@ -19,10 +19,11 @@ const DownloadButton = ({
   data,
   multiData,
   chartRefs,
+  customSize,
 }) => {
   const handleDownload = async () => {
     if (type === "pdf") {
-      await downloadPdfWithCharts(title, chartRefs, `${title}.pdf`);
+      await downloadPdfWithCharts(title, chartRefs, `${title}.pdf`, customSize);
     } else if (type === "excel") {
       downloadExcelWithTable(
         title,

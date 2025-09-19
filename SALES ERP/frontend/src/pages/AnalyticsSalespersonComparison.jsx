@@ -9,7 +9,7 @@ import {
 } from "../components";
 import analyticsService from "../services/analyticsService";
 
-const AnalyticsSalesComparison = ({
+const AnalyticsSalespersonComparison = ({
   selectedTab,
   selectedValue,
   salespersons,
@@ -230,4 +230,4 @@ const AnalyticsSalesComparison = ({
   );
 };
 
-export default AnalyticsSalesComparison;
+export default AnalyticsSalespersonComparison;

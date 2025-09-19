@@ -2,11 +2,11 @@ import { format } from "date-fns";
 import { useState, useEffect } from "react";
 import { useToast } from "../context/ToastContext";
 import { SpinnerLoader, CustomTabs, FilterDataCard } from "../components";
-import AnalyticsSalesAnalysis from "./AnalyticsSalesAnalysis";
-import AnalyticsSalesComparison from "./AnalyticsSalesComparison";
+import AnalyticsSalespersonAnalysis from "./AnalyticsSalespersonAnalysis";
+import AnalyticsSalespersonComparison from "./AnalyticsSalespersonComparison";
 import analyticsService from "../services/analyticsService";
 
-const AnalyticsSales = () => {
+const AnalyticsSalesperson = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("analysis");
   // ✅ Shared filter states
@@ -84,7 +84,7 @@ const AnalyticsSales = () => {
 
         {/* Sub-Sales Analytics pages */}
         {activeTab === "analysis" && (
-          <AnalyticsSalesAnalysis
+          <AnalyticsSalespersonAnalysis
             selectedTab={selectedTab}
             selectedValue={selectedValue}
             selectedSalespersonIds={selectedSalespersonIds}
@@ -93,7 +93,7 @@ const AnalyticsSales = () => {
           />
         )}
         {activeTab === "comparison" && (
-          <AnalyticsSalesComparison
+          <AnalyticsSalespersonComparison
             selectedTab={selectedTab}
             selectedValue={selectedValue}
             salespersons={salespersons}
@@ -107,4 +107,4 @@ const AnalyticsSales = () => {
   );
 };
 
-export default AnalyticsSales;
+export default AnalyticsSalesperson;

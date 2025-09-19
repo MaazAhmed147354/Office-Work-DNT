@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CircleDollarSign, PackageOpen } from "lucide-react";
 import { ToggleSwitch } from "../components";
-import AnalyticsSales from "./AnalyticsSales";
+import AnalyticsSales from "./AnalyticsSalesperson";
 import AnalyticsProducts from "./AnalyticsProducts";
 
 const Analytics = () => {

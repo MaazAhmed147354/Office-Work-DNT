@@ -12,7 +12,7 @@ import {
 } from "../components";
 import analyticsService from "../services/analyticsService";
 
-const AnalyticsSalesAnalysis = ({
+const AnalyticsSalespersonAnalysis = ({
   selectedTab,
   selectedValue,
   selectedSalespersonIds,
@@ -231,4 +231,4 @@ const AnalyticsSalesAnalysis = ({
   );
 };
 
-export default AnalyticsSalesAnalysis;
+export default AnalyticsSalespersonAnalysis;

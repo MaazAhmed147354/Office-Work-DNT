@@ -78,7 +78,7 @@ const AnalyticsChartCard = forwardRef(({ tab, value, data }, ref) => {
       className="bg-[#252538] rounded-xl p-6 border border-[#38384a] hover:border-[#8a4fff]/50 transition-colors duration-300"
     >
       <h3 className="text-sm font-medium text-[#BEB7DF] mb-4">
-        Sales Analytics ({tab?.toUpperCase()} - {value || "All"})
+        Sales ({tab?.toUpperCase()} - {value || "All"})
       </h3>
       <GlobalChart
         type="bar"

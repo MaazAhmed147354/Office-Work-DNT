@@ -69,7 +69,7 @@ const ContributionChartCard = forwardRef(({ tab, value, data }, ref) => {
       className="bg-[#252538] rounded-xl p-6 border border-[#38384a] hover:border-[#8a4fff]/50"
     >
       <h3 className="text-sm font-medium text-[#BEB7DF] mb-4">
-        Percentage Contribution ({tab?.toUpperCase()} - {value || "All"})
+        Contribution in Total Sales ({tab?.toUpperCase()} - {value || "All"})
       </h3>
       <GlobalChart
         type="polarArea"

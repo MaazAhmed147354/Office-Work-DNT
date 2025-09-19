@@ -74,6 +74,12 @@ const AnalyticsSalespersonComparison = ({
           referenceDate = `${year}-${quarterMap[selectedValue]}-01`;
         }
 
+        if (selectedSalespersonIds.length === 0) {
+          setAnalysisData([]);
+          showToast("Please select at least one salesperson.", "warning");
+          return;
+        }
+
         const data = await analyticsService.GetSalesAnalysis(
           selectedSalespersonIds,
           rangeType,

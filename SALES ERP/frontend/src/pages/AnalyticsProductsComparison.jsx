@@ -63,10 +63,11 @@ const AnalyticsProductsComparison = ({
           referenceDate = `${year}-${quarterMap[selectedValue]}-01`;
         }
 
-        const brandIds =
-          selectedBrandIds.length > 0
-            ? selectedBrandIds
-            : brands.map((b) => b.id);
+        const brandIds = selectedBrandIds;
+        if (brandIds.length === 0) {
+          setAnalysisData([]);
+          return;
+        }
 
         const data = await analyticsService.GetProductsAnalysis(
           brandIds,

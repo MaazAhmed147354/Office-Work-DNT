@@ -73,18 +73,28 @@ const AnalyticsProductsAnalysis = ({
           referenceDate = `${year}-${quarterMap[selectedValue]}-01`;
         }
 
-        const brandIds =
-          selectedBrandIds.length > 0
-            ? selectedBrandIds
-            : brands.map((b) => b.id);
+        if (selectedBrandIds.length === 0) {
+          setAnalysisData([]);
+          showToast("Please select at least one brand.", "warning");
+          return;
+        }
 
         const data = await analyticsService.GetProductsAnalysis(
-          brandIds,
+          selectedBrandIds,
           rangeType,
           referenceDate
         );
-        setAnalysisData(data);
-        showToast("Products Analytics data fetched", "success");
+
+        if (!data || data.length === 0) {
+          setAnalysisData([]);
+          showToast(
+            "No sales data available for the selected period.",
+            "warning"
+          );
+        } else {
+          setAnalysisData(data);
+          showToast("Products Analytics data fetched", "success");
+        }
       } catch (err) {
         setError("Failed to fetch products analytics");
         console.error(err);

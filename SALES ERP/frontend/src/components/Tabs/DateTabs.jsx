@@ -12,13 +12,17 @@ const DateTabCard = ({
   const [activeTab, setActiveTab] = useState(null);
   const wrapperRef = useRef(null);
 
-  // Generate years and quarter options
+  // Generate quarter options
   const quarterOptions = [
     { value: "Q1", label: "Q1 (Jan–Mar)" },
     { value: "Q2", label: "Q2 (Apr–Jun)" },
     { value: "Q3", label: "Q3 (Jul–Sep)" },
     { value: "Q4", label: "Q4 (Oct–Dec)" },
   ];
+  // ✅ Current quarter of this year
+  const currentQuarter = Math.ceil((new Date().getMonth() + 1) / 3);
+
+  // Generate year options
   const generateYears = () => {
     const currentYear = new Date().getFullYear();
     const options = [];
@@ -30,7 +34,6 @@ const DateTabCard = ({
     }
     return options;
   };
-
   const yearsOptions = generateYears();
 
   const handleTabClick = (tab) => {
@@ -98,28 +101,27 @@ const DateTabCard = ({
               {/* Picker rendered inline, adjusts other tabs */}
               {showPicker && activeTab === tab && (
                 <>
-                  {tab === "year" && (
-                    <CustomDropdown
-                      key="year-dropdown"
-                      onSelect={handleValueChange}
-                      selectedValue={
-                        selectedTab === "year" ? selectedValue : ""
-                      }
-                      options={yearsOptions}
-                      placeholder="Select Year"
-                      customWidth="min-w-[120px]"
+                  {tab === "week" && (
+                    <input
+                      type="week"
+                      max={`${new Date().getFullYear()}-W${String(
+                        Math.floor(
+                          ((new Date() -
+                            new Date(new Date().getFullYear(), 0, 1)) /
+                            86400000 +
+                            new Date().getDay() +
+                            1) /
+                            7
+                        )
+                      ).padStart(2, "0")}`}
+                      className="p-2 rounded bg-[#1e1e2f] text-gray-200"
+                      onChange={(e) => handleValueChange(e.target.value)}
                     />
                   )}
                   {tab === "month" && (
                     <input
                       type="month"
-                      className="p-2 rounded bg-[#1e1e2f] text-gray-200"
-                      onChange={(e) => handleValueChange(e.target.value)}
-                    />
-                  )}
-                  {tab === "week" && (
-                    <input
-                      type="week"
+                      max={new Date().toISOString().slice(0, 7)} // YYYY-MM
                       className="p-2 rounded bg-[#1e1e2f] text-gray-200"
                       onChange={(e) => handleValueChange(e.target.value)}
                     />
@@ -131,8 +133,25 @@ const DateTabCard = ({
                       selectedValue={
                         selectedTab === "quarter" ? selectedValue : ""
                       }
-                      options={quarterOptions}
+                      options={quarterOptions.filter(
+                        (q) =>
+                          selectedValue.split("-")[0] <
+                            new Date().getFullYear().toString() ||
+                          parseInt(q.value[1]) <= currentQuarter
+                      )}
                       placeholder="Select Quarter"
+                    />
+                  )}
+                  {tab === "year" && (
+                    <CustomDropdown
+                      key="year-dropdown"
+                      onSelect={handleValueChange}
+                      selectedValue={
+                        selectedTab === "year" ? selectedValue : ""
+                      }
+                      options={yearsOptions}
+                      placeholder="Select Year"
+                      customWidth="min-w-[120px]"
                     />
                   )}
                 </>

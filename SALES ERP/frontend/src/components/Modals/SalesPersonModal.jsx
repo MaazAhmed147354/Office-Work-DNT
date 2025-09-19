@@ -37,12 +37,13 @@ const SalespersonModal = ({
 
   // Apply the selection and close modal
   const handleApply = () => {
-    // Compare if change is different than the previous state
-    const isSame =
-      localSelectedIds.length === selectedSalespersonIds.length &&
-      localSelectedIds.every((id) => selectedSalespersonIds.includes(id));
+    const arraysEqual = (a, b) =>
+      a.length === b.length && new Set([...a, ...b]).size === a.length;
+
+    const isSame = arraysEqual(localSelectedIds, selectedSalespersonIds);
+
     if (!isSame) {
-      setSelectedSalespersonIds(localSelectedIds); // Update parent state
+      setSelectedSalespersonIds(localSelectedIds);
     }
 
     onClose();

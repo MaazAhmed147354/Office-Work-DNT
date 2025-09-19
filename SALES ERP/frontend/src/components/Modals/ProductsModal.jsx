@@ -83,10 +83,10 @@ const ProductsModal = ({
         localSelectedBrandIds.filter((id) => id !== brand.id)
       );
     } else {
-      // partial: don’t add/remove brand, keep indeterminate
-      setLocalSelectedBrandIds(
-        localSelectedBrandIds.filter((id) => id !== brand.id)
-      );
+      // intermediate => keep brand as selected (don’t drop ID)
+      if (!localSelectedBrandIds.includes(brand.id)) {
+        setLocalSelectedBrandIds([...localSelectedBrandIds, brand.id]);
+      }
     }
   };
 
@@ -105,8 +105,19 @@ const ProductsModal = ({
   };
 
   const handleApply = () => {
-    setSelectedBrandIds(localSelectedBrandIds);
-    setSelectedProductIds(localSelectedProductIds);
+    const arraysEqual = (local, global) =>
+      local.length === global.length &&
+      new Set([...local, ...global]).size === local.length;
+
+    const brandsChanged = !arraysEqual(localSelectedBrandIds, selectedBrandIds);
+    const productsChanged = !arraysEqual(
+      localSelectedProductIds,
+      selectedProductIds
+    );
+
+    if (brandsChanged) setSelectedBrandIds(localSelectedBrandIds);
+    if (productsChanged) setSelectedProductIds(localSelectedProductIds);
+
     onClose();
   };
 
